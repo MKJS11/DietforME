@@ -1,0 +1,108 @@
+/* 底部导航栏 */
+.tab-bar {
+  position: fixed !important;
+  bottom: 38rpx !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  width: 90% !important;
+  height: 120rpx !important;
+  backdrop-filter: blur(20px) !important;
+  -webkit-backdrop-filter: blur(20px) !important;
+  background-color: rgba(255, 255, 255, 0.85) !important;
+  display: flex !important;
+  box-shadow: 0 8rpx 32rpx rgba(30, 58, 50, 0.15) !important;
+  z-index: 100 !important;
+  border-radius: var(--border-radius, 30rpx) !important;
+  border: 1px solid rgba(255, 255, 255, 0.5) !important;
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'SF Pro Display', 'Helvetica Neue', Helvetica, Arial, sans-serif !important;
+}
+
+.tab-item {
+  flex: 1 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: center !important;
+  align-items: center !important;
+  padding: 12rpx 0 !important;
+  transition: all 0.25s ease !important;
+  position: relative !important;
+  cursor: pointer !important;
+}
+
+/* 增强点击效果 */
+.tab-item:active {
+  opacity: 0.7 !important;
+  transform: scale(0.95) !important;
+}
+
+/* 活跃状态指示器 */
+.tab-item.active::after {
+  content: '' !important;
+  position: absolute !important;
+  bottom: 10rpx !important;
+  width: 24rpx !important;
+  height: 4rpx !important;
+  background-color: var(--primary-color, #1e3a32) !important;
+  border-radius: 2rpx !important;
+}
+
+.tab-icon {
+  font-size: 48rpx !important;
+  margin-bottom: 6rpx !important;
+  transition: all 0.25s ease !important;
+  color: var(--text-secondary, #566b65) !important;
+  height: 48rpx !important;
+  line-height: 48rpx !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.tab-item.active .tab-icon {
+  transform: scale(1.1) !important;
+  color: var(--primary-color, #1e3a32) !important;
+}
+
+.tab-text {
+  font-size: 22rpx !important;
+  font-weight: 500 !important;
+  transition: all 0.25s ease !important;
+  color: var(--text-secondary, #566b65) !important;
+  line-height: 1.2 !important;
+  height: 22rpx !important;
+}
+
+.tab-item.active .tab-text {
+  font-weight: 600 !important;
+  transform: scale(1.05) !important;
+  color: var(--primary-color, #1e3a32) !important;
+}
+
+/* 玻璃效果 */
+.glass-effect {
+  backdrop-filter: blur(10px) !important;
+  -webkit-backdrop-filter: blur(10px) !important;
+  background-color: rgba(255, 255, 255, 0.7) !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+}
+
+/* 图标样式 - 使用emoji */
+.icon-home:before {
+  content: '🏠' !important; /* 家图标 */
+}
+
+.icon-food:before {
+  content: '🍲' !important; /* 食物图标 */
+}
+
+.icon-cart:before {
+  content: '🛒' !important; /* 购物车图标 */
+}
+
+.icon-chart:before {
+  content: '📊' !important; /* 图表图标 */
+}
+
+.icon-person:before {
+  content: '👤' !important; /* 人物图标 */
+} 

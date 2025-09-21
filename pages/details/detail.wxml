@@ -1,0 +1,236 @@
+<!--pages/recipe/detail.wxml-->
+<view class="container">
+  <!-- 加载中状态 -->
+  <view class="loading-container" wx:if="{{isLoading}}">
+    <view class="loading-spinner"></view>
+    <text class="loading-text">加载菜谱信息中...</text>
+  </view>
+  
+  <!-- 食谱不存在 -->
+  <view class="error-container" wx:elif="{{!recipe}}">
+    <text class="error-text">未找到菜谱信息</text>
+    <view class="error-action" bindtap="goBack">返回</view>
+  </view>
+  
+  <!-- 食谱详情 -->
+  <block wx:else>
+    <!-- 顶部标题区域 -->
+    <view class="recipe-header">
+      <view class="back-button" bindtap="goBack">
+        <text class="back-icon">←</text>
+      </view>
+      <view class="recipe-title-container">
+        <text class="recipe-title">{{recipe.name}}</text>
+        <view class="recipe-meta">
+          <view class="meta-item">
+            <text class="meta-icon">⏱️</text>
+            <text class="meta-text">{{recipe.time}}</text>
+          </view>
+          <view class="meta-item">
+            <text class="meta-icon">🔥</text>
+            <text class="meta-text">{{recipe.calories}}</text>
+          </view>
+          <view class="meta-item">
+            <text class="meta-icon">👥</text>
+            <text class="meta-text">{{recipe.servings}}</text>
+          </view>
+          <view class="meta-item">
+            <text class="meta-icon">⭐</text>
+            <text class="meta-text">{{recipe.difficulty}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+    
+    <!-- 内容区域 -->
+    <view class="recipe-content">
+      <!-- 分类和标签 -->
+      <view class="tags-section" wx:if="{{recipe.categories.length > 0 || recipe.tags.length > 0}}">
+        <view class="categories-container" wx:if="{{recipe.categories && recipe.categories.length > 0}}">
+          <view wx:for="{{recipe.categories}}" wx:key="*this" class="category-item">
+            {{item}}
+          </view>
+        </view>
+        <view class="tags-container" wx:if="{{recipe.tags && recipe.tags.length > 0}}">
+          <view wx:for="{{recipe.tags}}" wx:key="*this" class="tag-item">
+            #{{item}}
+          </view>
+        </view>
+      </view>
+      
+      <!-- 评分区域 -->
+      <view class="rating-section">
+        <view class="rating-stars">
+          <block wx:for="{{5}}" wx:key="*this">
+            <text class="star {{index < recipe.rating ? 'filled' : ''}}">⭐</text>
+          </block>
+        </view>
+        <text class="rating-count">{{recipe.ratingCount}}条评价</text>
+      </view>
+      
+      <!-- 健康益处 -->
+      <view class="section">
+        <view class="section-header">
+          <text class="section-title">健康益处</text>
+        </view>
+        <view class="section-content">
+          <text class="benefits-text">{{recipe.benefits || '暂无健康益处信息'}}</text>
+        </view>
+      </view>
+      
+      <!-- 食材列表 -->
+      <view class="section">
+        <view class="section-header" bindtap="toggleIngredients">
+          <text class="section-title">食材清单</text>
+          <view class="section-actions">
+            <view class="action-button" catchtap="addToShoppingList">
+              <text class="action-icon">🛒</text>
+              <text class="action-text">添加</text>
+            </view>
+            <text class="toggle-icon">{{showIngredients ? '▼' : '▶'}}</text>
+          </view>
+        </view>
+        <view class="section-content {{!showIngredients ? 'hidden' : ''}}">
+          <view class="ingredients-list" wx:if="{{recipe.ingredients && recipe.ingredients.length > 0}}">
+            <view wx:for="{{recipe.ingredients}}" wx:key="index" class="ingredient-item">
+              <text class="ingredient-icon">•</text>
+              <text class="ingredient-name">{{item.name || item}}</text>
+              <text class="ingredient-amount" wx:if="{{item.amount}}">{{item.amount}}{{item.unit || ''}}</text>
+            </view>
+          </view>
+          <text wx:else class="no-data">暂无食材信息</text>
+        </view>
+      </view>
+      
+      <!-- 营养成分 -->
+      <view class="section">
+        <view class="section-header" bindtap="toggleNutrition">
+          <text class="section-title">营养成分</text>
+          <text class="toggle-icon">{{showNutrition ? '▼' : '▶'}}</text>
+        </view>
+        <view class="section-content {{!showNutrition ? 'hidden' : ''}}">
+          <view class="nutrition-grid">
+            <block wx:if="{{recipe.nutritionArray && recipe.nutritionArray.length > 0}}">
+              <view wx:for="{{recipe.nutritionArray}}" wx:key="index" class="nutrition-item">
+                <text class="nutrition-name">{{item.name}}</text>
+                <text class="nutrition-value">{{item.value}}</text>
+              </view>
+            </block>
+            <block wx:else>
+              <view class="nutrition-item">
+                <text class="nutrition-name">蛋白质</text>
+                <text class="nutrition-value">0g</text>
+              </view>
+              <view class="nutrition-item">
+                <text class="nutrition-name">脂肪</text>
+                <text class="nutrition-value">0g</text>
+              </view>
+              <view class="nutrition-item">
+                <text class="nutrition-name">碳水化合物</text>
+                <text class="nutrition-value">0g</text>
+              </view>
+              <view class="nutrition-item">
+                <text class="nutrition-name">膳食纤维</text>
+                <text class="nutrition-value">0g</text>
+              </view>
+            </block>
+          </view>
+        </view>
+      </view>
+      
+      <!-- 烹饪步骤 -->
+      <view class="section">
+        <view class="section-header" bindtap="toggleSteps">
+          <text class="section-title">烹饪步骤</text>
+          <text class="toggle-icon">{{showSteps ? '▼' : '▶'}}</text>
+        </view>
+        <view class="section-content {{!showSteps ? 'hidden' : ''}}">
+          <view class="steps-list" wx:if="{{recipe.steps && recipe.steps.length > 0}}">
+            <view wx:for="{{recipe.steps}}" wx:key="index" class="step-item">
+              <view class="step-number">{{index + 1}}</view>
+              <text class="step-text">{{item}}</text>
+            </view>
+          </view>
+          <text wx:else class="no-data">暂无烹饪步骤信息</text>
+        </view>
+      </view>
+      
+      <!-- 烹饪小贴士 -->
+      <view class="section" wx:if="{{recipe.tips && recipe.tips.length > 0}}">
+        <view class="section-header" bindtap="toggleTips">
+          <text class="section-title">烹饪小贴士</text>
+          <text class="toggle-icon">{{showTips ? '▼' : '▶'}}</text>
+        </view>
+        <view class="section-content {{!showTips ? 'hidden' : ''}}">
+          <view class="tips-list">
+            <view wx:for="{{recipe.tips}}" wx:key="index" class="tip-item">
+              <text class="tip-icon">💡</text>
+              <text class="tip-text">{{item}}</text>
+            </view>
+          </view>
+        </view>
+      </view>
+      
+      <!-- 评论区域 -->
+      <view class="section" wx:if="{{recipe.comments && recipe.comments.length > 0}}">
+        <view class="section-header" bindtap="toggleComments">
+          <text class="section-title">用户评价</text>
+          <text class="toggle-icon">{{showComments ? '▼' : '▶'}}</text>
+        </view>
+        <view class="section-content {{!showComments ? 'hidden' : ''}}">
+          <view class="comments-list">
+            <view wx:for="{{recipe.comments}}" wx:key="index" class="comment-item">
+              <view class="comment-header">
+                <view class="comment-avatar"></view>
+                <view class="comment-info">
+                  <text class="comment-username">{{item.userName || '匿名用户'}}</text>
+                  <text class="comment-time">{{item.createdAt || ''}}</text>
+                </view>
+                <view class="comment-rating">
+                  <block wx:if="{{item.rating > 0}}">
+                    <text wx:for="{{[1, 2, 3, 4, 5]}}" wx:for-item="star" wx:for-index="starIndex" wx:key="*this" 
+                          class="star {{starIndex < item.rating ? 'filled' : ''}}">⭐</text>
+                  </block>
+                </view>
+              </view>
+              <text class="comment-content">{{item.content || ''}}</text>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+    
+    <!-- 底部操作栏 -->
+    <view class="action-bar">
+      <view class="action-button" bindtap="toggleFavorite">
+        <text class="action-icon {{isFavorite ? 'favorite' : ''}}">{{isFavorite ? '❤️' : '🤍'}}</text>
+        <text class="action-text">{{isFavorite ? '已收藏' : '收藏'}}</text>
+      </view>
+      <view class="action-button" bindtap="showRatingModal">
+        <text class="action-icon">⭐</text>
+        <text class="action-text">评价</text>
+      </view>
+      <button class="share-button" open-type="share">
+        <text class="action-icon">🔗</text>
+        <text class="action-text">分享</text>
+      </button>
+    </view>
+    
+    <!-- 评分模态框 -->
+    <view class="rating-modal" wx:if="{{ratingModalVisible}}">
+      <view class="rating-modal-content">
+        <view class="rating-modal-title">评价菜谱</view>
+        <view class="rating-stars-input">
+          <view wx:for="{{5}}" wx:key="index" class="rating-star {{index < userRating ? 'active' : ''}}" bindtap="setUserRating" data-rating="{{index + 1}}">
+            ⭐
+          </view>
+        </view>
+        <textarea class="comment-textarea" placeholder="分享您的烹饪体验..." bindinput="onCommentInput" value="{{commentContent}}"></textarea>
+        <view class="rating-modal-actions">
+          <view class="modal-button cancel" bindtap="closeRatingModal">取消</view>
+          <view class="modal-button submit" bindtap="submitRating">提交</view>
+        </view>
+      </view>
+    </view>
+  </block>
+</view>

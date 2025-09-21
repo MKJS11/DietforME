@@ -1,0 +1,63 @@
+<!--pages/history/history.wxml-->
+<view class="container">
+  <view class="back-btn" bindtap="goBack" style="position: fixed; left: 30rpx; top: 103rpx">
+    <text class="back-icon">←</text>
+  </view>
+  
+  <view class="content-wrapper">
+    <view class="date-card" style="position: relative; left: 0rpx; top: 81rpx">
+      <view class="date-nav">
+        <view class="arrow" bindtap="prevDay">←</view>
+        <view class="current-date">{{currentDate}}</view>
+        <view class="arrow" bindtap="nextDay">→</view>
+      </view>
+      <view class="total-calories">
+        今日总热量 <text class="calories-num">{{totalCalories}}</text> 千卡
+      </view>
+    </view>
+    
+    <scroll-view scroll-y="true" class="history-list">
+      <block wx:if="{{dayRecords.length > 0}}">
+        <view 
+          wx:for="{{dayRecords}}" 
+          wx:key="index" 
+          class="record-item" 
+          bindtap="viewFoodDetail" 
+          data-index="{{index}}"
+         style="position: relative; left: -1rpx; top: 86rpx">
+          <view class="record-header">
+            <view class="food-image-container">
+              <image class="food-image" src="{{item.imageUrl || '/images/default-food.png'}}" mode="aspectFill"></image>
+            </view>
+            <view class="food-basic-info">
+              <view class="food-name">{{item.foodName}}</view>
+              <view class="food-time">{{item.formattedTime}}</view>
+              <view class="food-calories" style="position: relative; left: 438rpx; top: -96rpx">{{item.calories}}<text class="unit">千卡</text></view>
+            </view>
+          </view>
+          
+          <!-- 展开的食物详情 -->
+          <view class="food-detail-expanded" wx:if="{{selectedFoodIndex === index}}">
+            <view class="nutrition-tags">
+              <text class="tag" wx:if="{{item.protein}}">蛋白质 {{item.protein}}g</text>
+              <text class="tag" wx:if="{{item.carbs}}">碳水 {{item.carbs}}g</text>
+              <text class="tag" wx:if="{{item.fat}}">脂肪 {{item.fat}}g</text>
+              <text class="tag" wx:if="{{item.GI_level}}">GI {{item.GI_level}}</text>
+              <text class="tag" wx:if="{{item.GL_level}}">GL {{item.GL_level}}</text>
+            </view>
+            
+            <!-- 食物建议 -->
+            <view class="food-suggestion" wx:if="{{item.suggestion}}">
+              <text>{{item.suggestion}}</text>
+            </view>
+          </view>
+        </view>
+      </block>
+      
+      <view class="empty-tip" wx:else style="position: relative; left: 0rpx; top: 276rpx">
+        <image class="empty-icon" src="/images/empty.png"></image>
+        <text>今天还没有记录哦~</text>
+      </view>
+    </scroll-view>
+  </view>
+</view>

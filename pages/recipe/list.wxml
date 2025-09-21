@@ -1,0 +1,122 @@
+<!--pages/recipe/list.wxml-->
+<view class="page-container">
+  <!-- 顶部状态栏 -->
+  <view class="status-bar"></view>
+  
+  <!-- 顶部导航栏 -->
+  <view class="nav-bar">
+    <view class="back-button" bindtap="goBack">
+      <text class="back-icon">←</text>
+    </view>
+    <view class="page-title">健康食谱</view>
+    <view class="nav-actions">
+      <view class="search-icon" bindtap="showSearch">🔍</view>
+    </view>
+  </view>
+  
+  <!-- 搜索栏 -->
+  <view class="search-bar" wx:if="{{showSearchBar}}">
+    <input class="search-input" placeholder="搜索食谱或食材" confirm-type="search" bindinput="onSearchInput" bindconfirm="searchRecipes" value="{{searchKeyword}}"/>
+    <view class="search-cancel" bindtap="hideSearch">取消</view>
+  </view>
+  
+  <!-- 分类筛选 -->
+  <view class="filter-bar">
+    <scroll-view class="filter-scroll" scroll-x="true" enhanced="true" show-scrollbar="false" fast-deceleration="{{true}}">
+      <view class="filter-tags">
+        <view class="filter-tag {{currentCategory === 'all' ? 'active' : ''}}" bindtap="selectCategory" data-category="all">全部</view>
+        <view class="filter-tag {{currentCategory === 'breakfast' ? 'active' : ''}}" bindtap="selectCategory" data-category="breakfast">早餐</view>
+        <view class="filter-tag {{currentCategory === 'lunch' ? 'active' : ''}}" bindtap="selectCategory" data-category="lunch">午餐</view>
+        <view class="filter-tag {{currentCategory === 'dinner' ? 'active' : ''}}" bindtap="selectCategory" data-category="dinner">晚餐</view>
+        <view class="filter-tag {{currentCategory === 'snack' ? 'active' : ''}}" bindtap="selectCategory" data-category="snack">小食</view>
+        <view class="filter-tag {{currentCategory === 'vegetarian' ? 'active' : ''}}" bindtap="selectCategory" data-category="vegetarian">素食</view>
+        <view class="filter-tag {{currentCategory === 'lowcarb' ? 'active' : ''}}" bindtap="selectCategory" data-category="lowcarb">低碳水</view>
+        <view class="filter-tag {{currentCategory === 'highprotein' ? 'active' : ''}}" bindtap="selectCategory" data-category="highprotein">高蛋白</view>
+        <view class="filter-tag {{currentCategory === 'recommended' ? 'active' : ''}}" bindtap="selectCategory" data-category="recommended">推荐</view>
+      </view>
+    </scroll-view>
+  </view>
+  
+  <!-- 操作栏 -->
+  <view class="action-bar">
+    <view class="last-updated" wx:if="{{lastUpdated}}">
+      最后更新: {{lastUpdated}}
+    </view>
+    <view class="action-buttons">
+      <button class="btn-refresh-api" bindtap="refreshFromAPI" loading="{{isLoadingAPI}}">
+        从API获取新食谱
+      </button>
+    </view>
+  </view>
+  
+  <!-- 内容区域 -->
+  <scroll-view class="scrollarea" scroll-y type="list" enhanced="true" show-scrollbar="false" bounces="true" bindscrolltolower="loadMore">
+    <!-- 加载中状态 -->
+    <view class="loading-container" wx:if="{{isLoading && !isLoadingMore}}">
+      <view class="loading-spinner"></view>
+      <text class="loading-text">加载食谱中...</text>
+    </view>
+    
+    <!-- 错误状态 -->
+    <view class="error-container" wx:elif="{{loadingError}}">
+      <text class="error-icon">⚠️</text>
+      <text class="error-text">{{loadingError}}</text>
+      <view class="error-actions">
+        <button class="error-action-btn" bindtap="refreshRecipes">从数据库刷新</button>
+        <button class="error-action-btn primary" bindtap="refreshFromAPI">从API获取</button>
+      </view>
+    </view>
+    
+    <!-- 食谱列表 -->
+    <view class="recipe-list" wx:elif="{{filteredRecipes.length > 0}}">
+      <view class="data-source-tip">
+        <text>数据来源: <text class="api-source">火山大模型API</text></text>
+        <text wx:if="{{lastUpdated}}" class="update-time">最后更新: {{lastUpdated}}</text>
+        <text class="recipe-count">当前共有 {{recipes.length}} 个食谱</text>
+      </view>
+      
+      <view wx:for="{{filteredRecipes}}" wx:key="id" class="recipe-card" bindtap="viewRecipeDetail" data-id="{{item._id}}">
+        <view class="recipe-header">
+          <text class="recipe-name">{{item.name}}</text>
+          <view class="favorite-icon {{item.isFavorite ? 'active' : ''}}" catchtap="toggleFavorite" data-id="{{item._id}}">
+            {{item.isFavorite ? '❤️' : '🤍'}}
+          </view>
+        </view>
+        <view class="recipe-info">
+          <view class="recipe-meta">
+            <text class="recipe-time">{{item.time}}</text>
+            <text class="recipe-calories">{{item.calories}}</text>
+            <text class="recipe-tag" wx:if="{{item.tag}}">{{item.tag}}</text>
+          </view>
+          <view class="recipe-ingredients" wx:if="{{item.ingredients}}">
+            <text class="ingredients-label">主要食材:</text>
+            <text class="ingredients-text">{{item.ingredients.join(', ')}}</text>
+          </view>
+          <text class="recipe-benefits" wx:if="{{item.benefits}}">{{item.benefits}}</text>
+        </view>
+      </view>
+      
+      <!-- 加载更多 -->
+      <view class="loading-more" wx:if="{{isLoadingMore}}">
+        <view class="loading-spinner-small"></view>
+        <text class="loading-text-small">加载更多...</text>
+      </view>
+    </view>
+    
+    <!-- 没有食谱时显示 -->
+    <view class="no-recipes" wx:else>
+      <text class="no-recipes-icon">🍽️</text>
+      <text class="no-recipes-text">暂无符合条件的食谱</text>
+      <view class="no-recipes-actions">
+        <button class="no-recipes-action-btn" bindtap="resetFilters">重置筛选</button>
+        <button class="no-recipes-action-btn primary" bindtap="refreshFromAPI">从API获取</button>
+      </view>
+    </view>
+  </scroll-view>
+  
+  <!-- 悬浮按钮 -->
+  <view class="floating-button" bindtap="refreshRecipes">
+    <text class="floating-icon">🔄</text>
+    <text class="floating-text">刷新</text>
+  </view>
+</view> 

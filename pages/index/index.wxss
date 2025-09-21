@@ -1,0 +1,1173 @@
+/**index.wxss**/
+page {
+  --primary-color: #1e3a32; /* 墨绿色主色调 */
+  --primary-light: #e8f0ee; /* 墨绿色浅色调 */
+  --primary-dark: #0f1f1a; /* 墨绿色深色调 */
+  --accent-color: #4a7c6f; /* 墨绿色辅助色 */
+  --text-primary: #333333;
+  --text-secondary: #666666;
+  --text-hint: #8e8e93;
+  --background-color: #f5f7f6; /* 浅灰绿背景 */
+  --card-background: rgba(255, 255, 255, 0.85); /* 降低卡片背景不透明度 */
+  --border-radius: 28rpx;
+  --shadow: 0 8rpx 32rpx rgba(30, 58, 50, 0.08); /* 降低阴影不透明度 */
+  
+  height: 100vh;
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'SF Pro Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  color: var(--text-primary);
+  background-color: var(--background-color);
+  font-size: 28rpx;
+  line-height: 1.5;
+  position: relative;
+}
+
+/* 背景图片样式 */
+.bg-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  opacity: 0.9;
+  pointer-events: none;
+  object-fit: cover;
+}
+
+/* SF Symbols 风格图标 */
+.icon-bell:before { content: '🔔'; }
+.icon-person:before { content: '👤'; }
+.icon-edit:before { content: '✏️'; }
+.icon-water:before { content: '💧'; }
+.icon-calendar:before { content: '📅'; }
+.icon-food:before { content: '🍲'; }
+.icon-cart:before { content: '🛒'; }
+.icon-chart:before { content: '📊'; }
+.icon-people:before { content: '👥'; }
+.icon-settings:before { content: '⚙️'; }
+.icon-refresh:before { content: '🔄'; }
+.icon-time:before { content: '⏱️'; }
+.icon-fire:before { content: '🔥'; }
+.icon-home:before { content: '🏠'; }
+
+.page-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  background: linear-gradient(135deg, rgba(245, 247, 246, 0.2) 0%, rgba(232, 240, 238, 0.2) 100%);
+  z-index: 1;
+}
+
+/* 顶部状态栏 */
+.status-bar {
+  height: 40px;
+  width: 100%;
+  background-color: rgba(255, 255, 255, 0.8); /* 降低不透明度 */
+  flex-shrink: 0;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  z-index: 10;
+}
+
+/* 顶部导航栏 */
+.nav-bar {
+  height: 80rpx;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 30rpx;
+  background: rgba(255, 255, 255, 0.75) !important; /* 降低不透明度 */
+  color: var(--primary-color);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.4);
+  width: 100%;
+  box-sizing: border-box;
+  flex-shrink: 0;
+  backdrop-filter: blur(45px) saturate(160%) contrast(35%) brightness(140%);
+  -webkit-backdrop-filter: blur(45px) saturate(160%) contrast(35%) brightness(140%);
+  z-index: 10;
+}
+
+.app-title {
+  display: flex;
+  align-items: baseline;
+}
+
+.app-name {
+  font-size: 34rpx;
+  font-weight: 600;
+  color: var(--primary-color);
+}
+
+.app-version {
+  font-size: 20rpx;
+  margin-left: 10rpx;
+  opacity: 0.6;
+  color: var(--primary-color);
+}
+
+.nav-actions {
+  display: flex;
+  align-items: center;
+}
+
+.notification-icon {
+  font-size: 40rpx;
+  color: var(--primary-color);
+}
+
+/* 滚动区域 */
+.scrollarea {
+  height: calc(100vh - 40px - 40px - 120rpx);
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+  width: 100%;
+  box-sizing: border-box;
+  scroll-behavior: smooth;
+}
+
+.container {
+  padding: 32rpx 24rpx; /* 增加内边距 */
+  padding-bottom: 160rpx;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* 用户信息卡片 */
+.user-card {
+  display: flex;
+  align-items: center;
+  border-radius: var(--border-radius);
+  padding: 30rpx;
+  margin-bottom: 40rpx;
+  position: relative;
+  width: 100%;
+  box-sizing: border-box;
+  backdrop-filter: blur(45px) saturate(160%) contrast(35%) brightness(140%);
+  -webkit-backdrop-filter: blur(45px) saturate(160%) contrast(35%) brightness(140%);
+  background: rgba(255, 255, 255, 0.35) !important; /* 降低不透明度 */
+  box-shadow: 
+    0 20rpx 32rpx rgba(30, 58, 50, 0.06),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  transform: translateY(0);
+  transition: transform 0.3s ease;
+}
+
+.user-card:active {
+  transform: translateY(2rpx);
+}
+
+.user-avatar {
+  width: 120rpx; /* 增大头像 */
+  height: 120rpx;
+  border: 3px solid rgba(255, 255, 255, 0.9); /* 更明显的边框 */
+  box-shadow: 0 4rpx 12rpx rgba(30, 58, 50, 0.1);
+  border-radius: 50%;
+  background-color: var(--primary-light);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 20rpx;
+  font-size: 60rpx;
+  color: var(--primary-color);
+}
+
+.avatar-placeholder {
+  font-size: 60rpx;
+}
+
+.user-details {
+  flex: 1;
+}
+
+.user-greeting {
+  font-size: 32rpx;
+  font-weight: 600;
+  margin-bottom: 6rpx;
+  color: var(--primary-color);
+}
+
+.user-info-summary {
+  font-size: 24rpx;
+  color: var(--text-secondary);
+}
+
+.edit-profile-btn {
+  width: 60rpx;
+  height: 60rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--primary-light);
+  border-radius: 50%;
+  color: var(--primary-color);
+}
+
+.edit-icon {
+  font-size: 28rpx;
+}
+
+/* 健康数据概览 */
+.health-overview {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 40rpx;
+  padding: 32rpx;
+  border-radius: var(--border-radius);
+  width: 100%;
+  box-sizing: border-box;
+  backdrop-filter: blur(45px) saturate(160%) contrast(35%) brightness(140%);
+  -webkit-backdrop-filter: blur(45px) saturate(160%) contrast(35%) brightness(140%);
+  background: rgba(255, 255, 255, 0.55) !important; /* 降低不透明度 */
+  box-shadow: 
+    0 20rpx 32rpx rgba(30, 58, 50, 0.06),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  transform: translateY(0);
+  transition: transform 0.3s ease;
+}
+
+.health-overview:active {
+  transform: translateY(2rpx);
+}
+
+.health-card {
+  width: calc(33.33% - 16rpx);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: transform 0.2s;
+  position: relative;
+  padding: 20rpx 0;
+}
+
+.health-card:not(:last-child):after {
+  content: '';
+  position: absolute;
+  right: -8rpx;
+  top: 20%;
+  height: 60%;
+  width: 1rpx;
+  background: linear-gradient(to bottom, rgba(30, 58, 50, 0), rgba(30, 58, 50, 0.1), rgba(30, 58, 50, 0));
+}
+
+.health-card:active {
+  transform: scale(0.98);
+}
+
+.health-card-value {
+  font-size: 48rpx; /* 增大数值字体 */
+  font-weight: 600;
+  background: linear-gradient(135deg, var(--primary-color) 0%, var(--accent-color) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 12rpx;
+}
+
+.health-card-icon {
+  font-size: 36rpx;
+  margin-bottom: 8rpx;
+  color: var(--primary-color);
+}
+
+.health-card-label {
+  font-size: 24rpx;
+  color: var(--text-secondary);
+  margin-bottom: 12rpx;
+}
+
+.health-card-status {
+  font-size: 22rpx;
+  padding: 4rpx 12rpx;
+  border-radius: 20rpx;
+}
+
+.health-card-status.good {
+  background-color: rgba(30, 58, 50, 0.1);
+  color: var(--primary-color);
+}
+
+.health-card-status.warning {
+  background-color: #fff8e1;
+  color: #ffa000;
+}
+
+.health-card-status.alert {
+  background-color: #ffebee;
+  color: #d32f2f;
+}
+
+.health-card-progress {
+  width: 90%;
+  margin-top: 8rpx;
+}
+
+/* 通用部分样式 */
+.section {
+  margin-bottom: 30rpx;
+  animation: fadeIn 0.5s ease forwards;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16rpx;
+  padding: 0;
+}
+
+.section-title {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: var(--primary-color);
+}
+
+.section-action {
+  font-size: 24rpx;
+  color: var(--primary-color);
+}
+
+.section-actions {
+  display: flex;
+  align-items: center;
+}
+
+.refresh-icon {
+  font-size: 28rpx;
+  margin-right: 16rpx;
+}
+
+/* 饮食建议部分 */
+.diet-tips-section {
+  margin-bottom: 40rpx;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.diet-tips {
+  border-radius: var(--border-radius);
+  overflow: hidden;
+  width: 100%;
+  box-sizing: border-box;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  background-color: var(--card-background);
+  box-shadow: var(--shadow);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  transform: translateY(0);
+  transition: transform 0.3s ease;
+}
+
+.diet-tips:active {
+  transform: translateY(2rpx);
+}
+
+.tip-item {
+  display: flex;
+  padding: 32rpx;
+  border-bottom: 0.5rpx solid rgba(30, 58, 50, 0.05);
+  width: 100%;
+  box-sizing: border-box;
+  position: relative;
+  overflow: hidden;
+}
+
+.tip-item::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 32rpx;
+  right: 32rpx;
+  height: 1px;
+  background: linear-gradient(to right, rgba(30, 58, 50, 0), rgba(30, 58, 50, 0.1), rgba(30, 58, 50, 0));
+}
+
+.tip-item:last-child::after {
+  display: none;
+}
+
+.tip-icon {
+  width: 96rpx;
+  height: 96rpx;
+  margin-right: 24rpx;
+  border: 2px solid rgba(255, 255, 255, 0.9);
+  box-shadow: 0 4rpx 12rpx rgba(30, 58, 50, 0.1);
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 40rpx;
+}
+
+.tip-icon-fruits {
+  background-color: rgba(30, 58, 50, 0.1);
+  color: var(--primary-color);
+}
+
+.tip-icon-protein {
+  background-color: rgba(30, 58, 50, 0.1);
+  color: var(--primary-color);
+}
+
+.tip-icon-water {
+  background-color: rgba(30, 58, 50, 0.1);
+  color: var(--primary-color);
+}
+
+.tip-content {
+  flex: 1;
+}
+
+.tip-title {
+  font-size: 28rpx;
+  font-weight: 600;
+  display: block;
+  margin-bottom: 6rpx;
+  color: var(--primary-color);
+}
+
+.tip-desc {
+  font-size: 24rpx;
+  color: var(--text-secondary);
+  display: block;
+}
+
+/* 功能导航网格 */
+.feature-grid {
+  display: flex;
+  flex-wrap: wrap;
+  width: 79%;
+  box-sizing: border-box;
+  justify-content: space-between;
+  padding: 0;
+  margin-bottom: 70rpx;
+  margin-left: auto;
+  margin-right: auto;
+  gap: 40rpx;
+}
+
+.feature-item {
+  width: calc(50% - 20rpx);
+  aspect-ratio: 1;
+  margin-bottom: 30rpx;
+  border-radius: var(--border-radius);
+  padding: 40rpx;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 24rpx;
+  backdrop-filter: blur(45px) saturate(180%) contrast(40%) brightness(150%);
+  -webkit-backdrop-filter: blur(45px) saturate(180%) contrast(40%) brightness(150%);
+  background: rgba(255, 255, 255, 0.85) !important;
+  box-shadow: 
+    0 20rpx 32rpx rgba(30, 58, 50, 0.08),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  transform: translateY(0);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.feature-item::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0));
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.feature-item:active {
+  transform: translateY(4rpx) scale(0.98);
+  box-shadow: 0 2rpx 8rpx rgba(30, 58, 50, 0.08);
+}
+
+.feature-item:active::before {
+  opacity: 1;
+}
+
+.feature-icon {
+  width: 120rpx;
+  height: 120rpx;
+  border-radius: 28rpx;
+  font-size: 64rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, rgba(30, 58, 50, 0.15), rgba(30, 58, 50, 0.05));
+  border: 2px solid rgba(255, 255, 255, 0.9);
+  box-shadow: 0 4rpx 12rpx rgba(30, 58, 50, 0.1);
+  transition: all 0.3s ease;
+  margin: 0;
+}
+
+.feature-item:active .feature-icon {
+  transform: scale(0.92);
+}
+
+.feature-name {
+  font-size: 32rpx;
+  font-weight: 600;
+  text-align: center;
+  color: var(--primary-color);
+  transition: transform 0.3s ease;
+  margin: 0;
+}
+
+/* 食谱推荐部分 */
+.recipe-list {
+  display: flex;
+  flex-direction: column;
+  padding: 8rpx 0;
+}
+
+.recipe-card {
+  width: 100%;
+  margin-bottom: 16rpx;
+  border-radius: var(--border-radius);
+  overflow: hidden;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  background-color: var(--card-background);
+  box-shadow: var(--shadow);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+.recipe-image {
+  height: 200rpx;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+}
+
+.recipe-tag {
+  position: absolute;
+  top: 10rpx;
+  left: 10rpx;
+  background-color: rgba(30, 58, 50, 0.7);
+  color: white;
+  font-size: 22rpx;
+  padding: 4rpx 12rpx;
+  border-radius: 12rpx;
+}
+
+.recipe-info {
+  padding: 20rpx;
+}
+
+.recipe-name {
+  font-size: 28rpx;
+  font-weight: 600;
+  display: block;
+  margin-bottom: 10rpx;
+  color: var(--primary-color);
+}
+
+.recipe-meta {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10rpx;
+}
+
+.recipe-time, .recipe-calories {
+  font-size: 22rpx;
+  color: var(--text-hint);
+  display: flex;
+  align-items: center;
+}
+
+.recipe-time .icon-time, .recipe-calories .icon-fire {
+  margin-right: 4rpx;
+}
+
+.recipe-ingredients {
+  margin-top: 10rpx;
+  margin-bottom: 6rpx;
+}
+
+.ingredients-label {
+  font-size: 22rpx;
+  color: var(--text-secondary);
+  margin-right: 6rpx;
+}
+
+.ingredients-text {
+  font-size: 22rpx;
+  color: var(--text-primary);
+}
+
+.recipe-benefits {
+  font-size: 22rpx;
+  color: var(--primary-color);
+  display: block;
+  margin-top: 6rpx;
+}
+
+/* 加载状态 */
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40rpx 0;
+  border-radius: var(--border-radius);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  background-color: var(--card-background);
+  box-shadow: var(--shadow);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+.loading-spinner {
+  width: 60rpx;
+  height: 60rpx;
+  border: 3rpx solid rgba(30, 58, 50, 0.1);
+  border-top: 3rpx solid var(--primary-color);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 20rpx;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.loading-text {
+  font-size: 26rpx;
+  color: var(--text-secondary);
+}
+
+/* 错误状态 */
+.error-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40rpx 0;
+  border-radius: var(--border-radius);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  background-color: var(--card-background);
+  box-shadow: var(--shadow);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+.error-text {
+  font-size: 26rpx;
+  color: #ff3b30;
+  margin-bottom: 20rpx;
+  text-align: center;
+}
+
+.error-action {
+  font-size: 26rpx;
+  color: var(--primary-color);
+  padding: 10rpx 30rpx;
+  border: 1rpx solid var(--primary-color);
+  border-radius: 20rpx;
+}
+
+/* 没有食谱时的样式 */
+.no-recipes {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40rpx 0;
+  border-radius: var(--border-radius);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  background-color: var(--card-background);
+  box-shadow: var(--shadow);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+.no-recipes text {
+  font-size: 26rpx;
+  color: var(--text-secondary);
+  margin-bottom: 20rpx;
+}
+
+.action-button {
+  font-size: 26rpx;
+  color: white;
+  background-color: var(--primary-color);
+  padding: 10rpx 30rpx;
+  border-radius: 20rpx;
+}
+
+/* 进度条样式 */
+.progress-bar {
+  height: 10rpx;
+  background: linear-gradient(to right, rgba(30, 58, 50, 0.05), rgba(30, 58, 50, 0.1));
+  border-radius: 5rpx;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(135deg, var(--primary-color) 0%, var(--accent-color) 100%);
+  border-radius: 5rpx;
+  transition: width 0.3s ease;
+}
+
+.progress-text {
+  font-size: 20rpx;
+  color: var(--text-hint);
+  text-align: center;
+}
+
+/* 滚动区域优化 */
+.scrollarea {
+  scroll-behavior: smooth;
+}
+
+/* 水杯组件样式 */
+.water-cup-container {
+  display: flex;
+  align-items: center;
+  padding: 40rpx;
+  margin-bottom: 40rpx;
+  border-radius: var(--border-radius);
+  position: relative;
+  width: 100%;
+  box-sizing: border-box;
+  backdrop-filter: blur(45px) saturate(180%) contrast(40%) brightness(150%);
+  -webkit-backdrop-filter: blur(45px) saturate(180%) contrast(40%) brightness(150%);
+  background: rgba(255, 255, 255, 0.85) !important;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+.water-cup {
+  position: relative;
+  width: 180rpx;
+  height: 220rpx;
+  margin-right: 50rpx;
+  cursor: pointer;
+  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  perspective: 1000rpx;
+}
+
+.water-cup:active {
+  transform: scale(0.92) translateY(5rpx);
+}
+
+.water-cup-inner {
+  position: relative;
+  width: 100%;
+  height: 180rpx;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.3));
+  border: 3rpx solid rgba(30, 58, 50, 0.15);
+  border-top-left-radius: 25rpx;
+  border-top-right-radius: 25rpx;
+  border-bottom-left-radius: 30rpx;
+  border-bottom-right-radius: 30rpx;
+  overflow: hidden;
+  box-shadow: 
+    0 10rpx 25rpx rgba(30, 58, 50, 0.15),
+    inset 0 5rpx 15rpx rgba(255, 255, 255, 0.8),
+    inset 0 -5rpx 15rpx rgba(30, 58, 50, 0.1);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  transform-style: preserve-3d;
+  transform: perspective(1000rpx) rotateX(5deg);
+}
+
+.water-cup-inner::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 5%;
+  width: 90%;
+  height: 20rpx;
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0));
+  border-radius: 50%;
+  z-index: 5;
+  filter: blur(2px);
+}
+
+.water-cup-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.water-amount {
+  font-size: 24rpx;
+  font-weight: bold;
+  color: rgba(15, 31, 26, 0.8);
+  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.6);
+  background: rgba(255, 255, 255, 0.3);
+  padding: 4rpx 12rpx;
+  border-radius: 12rpx;
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+  box-shadow: 0 2rpx 5rpx rgba(30, 58, 50, 0.1);
+}
+
+.water-cup-handle {
+  position: absolute;
+  top: 20rpx;
+  right: -25rpx;
+  width: 35rpx;
+  height: 80rpx;
+  border: 3rpx solid rgba(30, 58, 50, 0.15);
+  border-left: none;
+  border-top-right-radius: 20rpx;
+  border-bottom-right-radius: 20rpx;
+  background: linear-gradient(to right, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.8));
+  box-shadow: 
+    3rpx 5rpx 10rpx rgba(30, 58, 50, 0.1),
+    inset 0 5rpx 10rpx rgba(255, 255, 255, 0.5);
+}
+
+.water-wave {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: linear-gradient(180deg, 
+    rgba(115, 201, 245, 0.6) 0%, 
+    rgba(52, 152, 219, 0.8) 50%,
+    rgba(41, 128, 185, 0.95) 100%);
+  transition: height 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+  border-radius: 3px;
+  box-shadow: 
+    inset 0 3rpx 10rpx rgba(255, 255, 255, 0.5),
+    inset 0 -3rpx 10rpx rgba(0, 0, 0, 0.1);
+  z-index: 2;
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+}
+
+.water-wave::before,
+.water-wave::after {
+  content: '';
+  position: absolute;
+  width: 200%;
+  height: 200%;
+  top: -150%;
+  left: -50%;
+  background: radial-gradient(circle at center, rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.1));
+  border-radius: 40%;
+  animation: wave 12s infinite cubic-bezier(0.45, 0.05, 0.55, 0.95);
+  transform-origin: 50% 48%;
+}
+
+.water-wave::after {
+  top: -130%;
+  left: -30%;
+  opacity: 0.6;
+  background: radial-gradient(circle at center, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.05));
+  animation: wave 8s infinite cubic-bezier(0.45, 0.05, 0.55, 0.95);
+  animation-delay: -2s;
+}
+
+/* 添加气泡 */
+.water-cup-inner::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 3;
+  pointer-events: none;
+  background-image: 
+    radial-gradient(3rpx 3rpx at 20% 65%, rgba(255, 255, 255, 0.9) 50%, transparent 54%),
+    radial-gradient(4rpx 4rpx at 35% 80%, rgba(255, 255, 255, 0.9) 50%, transparent 54%),
+    radial-gradient(5rpx 5rpx at 50% 85%, rgba(255, 255, 255, 0.9) 50%, transparent 54%),
+    radial-gradient(3rpx 3rpx at 65% 70%, rgba(255, 255, 255, 0.8) 50%, transparent 54%),
+    radial-gradient(2rpx 2rpx at 80% 75%, rgba(255, 255, 255, 0.8) 50%, transparent 54%),
+    radial-gradient(4rpx 4rpx at 95% 60%, rgba(255, 255, 255, 0.8) 50%, transparent 54%);
+  animation: bubbles 6s infinite ease-in;
+  opacity: 0.8;
+}
+
+@keyframes bubbles {
+  0% {
+    opacity: 0;
+    transform: translateY(0) scale(0.8);
+  }
+  20% {
+    opacity: 0.8;
+    transform: translateY(-10rpx) scale(1);
+  }
+  60% {
+    opacity: 0.8;
+    transform: translateY(-50rpx) scale(0.9) translateX(5rpx);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-80rpx) scale(0.7) translateX(-5rpx);
+  }
+}
+
+@keyframes wave {
+  0% {
+    transform: rotate(0deg) scale(1);
+  }
+  50% {
+    transform: rotate(180deg) scale(1.1);
+  }
+  100% {
+    transform: rotate(360deg) scale(1);
+  }
+}
+
+.water-cup-info {
+  flex: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.water-info-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.water-actions {
+  display: flex;
+  gap: 20rpx;
+  margin-left: 20rpx;
+}
+
+.water-action-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 16rpx;
+  border-radius: 16rpx;
+  background: rgba(30, 58, 50, 0.05);
+  transition: all 0.3s ease;
+}
+
+.water-action-btn:active {
+  transform: scale(0.95);
+  background: rgba(30, 58, 50, 0.1);
+}
+
+.water-action-btn .icon-refresh {
+  font-size: 40rpx;
+  color: var(--primary-color);
+  margin-bottom: 4rpx;
+}
+
+.water-action-btn .action-text {
+  font-size: 20rpx;
+  color: var(--text-secondary);
+}
+
+.water-cup-title {
+  font-size: 36rpx;
+  font-weight: 600;
+  color: var(--primary-color);
+  margin-bottom: 15rpx;
+  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.6);
+}
+
+.water-cup-percent {
+  font-size: 48rpx;
+  font-weight: bold;
+  background: linear-gradient(135deg, #2193b0, #6dd5ed);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 15rpx;
+}
+
+.water-cup-tip {
+  font-size: 26rpx;
+  color: var(--text-secondary);
+  padding: 8rpx 16rpx;
+  background: rgba(30, 58, 50, 0.05);
+  border-radius: 20rpx;
+  align-self: flex-start;
+  display: flex;
+  align-items: center;
+}
+
+.water-cup-tip::before {
+  content: '💧';
+  margin-right: 6rpx;
+}
+
+/* 水杯提示文字样式 */
+.water-cup-tip::before {
+  content: '💧';
+  margin-right: 6rpx;
+}
+
+/* 烟花特效样式 */
+.fireworks-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 9999;
+}
+
+.firework {
+  position: fixed;
+  width: 6rpx;
+  height: 6rpx;
+  border-radius: 50%;
+  animation: firework-explode 1.5s ease-out forwards;
+  z-index: 9999;
+}
+
+.firework::before {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  transform: scale(1);
+  animation: firework-particle 1.5s ease-out forwards;
+  background: radial-gradient(circle at center,
+    rgba(255, 255, 255, 1) 0%,
+    rgba(255, 220, 100, 0.8) 10%,
+    rgba(255, 180, 50, 0.6) 20%,
+    rgba(255, 120, 30, 0.4) 40%,
+    transparent 100%
+  );
+  box-shadow:
+    0 0 10rpx #fff,
+    0 0 20rpx #fff,
+    0 0 30rpx #ff0,
+    0 0 40rpx #ff8000,
+    0 0 50rpx #ff4000;
+  filter: blur(1rpx);
+}
+
+.firework::after {
+  content: '';
+  position: absolute;
+  width: 200%;
+  height: 200%;
+  top: -50%;
+  left: -50%;
+  border-radius: 50%;
+  transform: scale(0.1);
+  animation: firework-trail 1.5s ease-out forwards;
+  background: radial-gradient(circle at center,
+    rgba(255, 255, 255, 0.8) 0%,
+    rgba(255, 220, 100, 0.6) 20%,
+    rgba(255, 180, 50, 0.4) 40%,
+    rgba(255, 120, 30, 0.2) 60%,
+    transparent 100%
+  );
+}
+
+@keyframes firework-explode {
+  0% {
+    transform: scale(1) rotate(0deg);
+    opacity: 1;
+  }
+  20% {
+    transform: scale(15) rotate(180deg);
+    opacity: 0.9;
+  }
+  40% {
+    transform: scale(30) rotate(360deg);
+    opacity: 0.8;
+  }
+  60% {
+    transform: scale(45) rotate(540deg);
+    opacity: 0.6;
+  }
+  80% {
+    transform: scale(50) rotate(720deg);
+    opacity: 0.3;
+  }
+  100% {
+    transform: scale(60) rotate(900deg);
+    opacity: 0;
+  }
+}
+
+@keyframes firework-particle {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(0.8);
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(0.1);
+    opacity: 0;
+  }
+}
+
+@keyframes firework-trail {
+  0% {
+    transform: scale(0.1) rotate(0deg);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1) rotate(180deg);
+    opacity: 0.5;
+  }
+  100% {
+    transform: scale(2) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+/* 修改水波纹动画，使其更加生动 */
+.water-wave::before,
+.water-wave::after {
+  animation-timing-function: cubic-bezier(0.45, 0.05, 0.55, 0.95);
+  background: radial-gradient(circle at center, 
+    rgba(255, 255, 255, 0.6), 
+    rgba(255, 255, 255, 0.2)
+  );
+}
+
+.water-wave::before {
+  animation-duration: 8s;
+}
+
+.water-wave::after {
+  animation-duration: 6s;
+}
+
+/* 毛玻璃效果基础类 */
+.glass-effect {
+  backdrop-filter: blur(45px) saturate(180%) contrast(40%) brightness(150%);
+  -webkit-backdrop-filter: blur(45px) saturate(180%) contrast(40%) brightness(150%);
+  background: rgba(255, 255, 255, 0.85) !important;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  box-shadow: 
+    0 20rpx 32rpx rgba(30, 58, 50, 0.08),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.6);
+}
+
+/* 修改page-container的背景，使毛玻璃效果更明显 */
+.page-container {
+  background: linear-gradient(135deg, rgba(245, 247, 246, 0.2) 0%, rgba(232, 240, 238, 0.2) 100%);
+}
+

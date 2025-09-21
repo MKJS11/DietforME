@@ -1,0 +1,270 @@
+.container {
+  min-height: 100vh;
+  background-color: #f8f8f8;
+  padding: 0;
+}
+
+/* 顶部返回按钮样式 */
+.header {
+  padding: 0 30rpx;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  box-sizing: border-box;
+  z-index: 100;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.back-btn, .refresh-btn {
+  width: 80rpx;
+  height: 80rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 50%;
+  box-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.1);
+}
+
+.back-arrow {
+  font-size: 40rpx;
+  color: #333;
+}
+
+.refresh-icon {
+  font-size: 40rpx;
+  color: #333;
+}
+
+.refresh-btn.loading .refresh-icon {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* 主要内容区域样式 */
+.content-container {
+  padding: 0 24rpx;
+  margin-top: 30rpx;
+  padding-top: 40rpx;
+}
+
+/* 天气卡片样式 */
+.weather-card {
+  background-color: #8b4513;
+  color: white;
+  padding: 24rpx;
+  border-radius: 16rpx;
+  margin-bottom: 16rpx;
+  display: flex;
+  justify-content: space-between;
+  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.1);
+  width: 100%;
+}
+
+.date-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.current-date {
+  font-size: 40rpx;
+  font-weight: bold;
+  margin-bottom: 4rpx;
+}
+
+.day-name {
+  font-size: 24rpx;
+  opacity: 0.9;
+}
+
+.weather-info {
+  text-align: right;
+}
+
+.temperature {
+  font-size: 40rpx;
+  font-weight: bold;
+  margin-bottom: 4rpx;
+}
+
+.weather-desc {
+  font-size: 24rpx;
+  margin-bottom: 4rpx;
+}
+
+.location {
+  font-size: 20rpx;
+  opacity: 0.8;
+}
+
+/* 今日推荐食谱区域样式 */
+.recipe-section {
+  margin-bottom: 24rpx;
+}
+
+.section-header {
+  margin-bottom: 12rpx;
+}
+
+.section-title {
+  font-size: 28rpx;
+  font-weight: bold;
+  color: #333;
+  display: block;
+  margin-bottom: 4rpx;
+}
+
+.section-subtitle {
+  font-size: 20rpx;
+  color: #666;
+  display: block;
+}
+
+/* 食谱列表样式 */
+.recipe-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12rpx;
+}
+
+.recipe-item {
+  width: 100%;
+}
+
+.recipe-card {
+  background-color: white;
+  border-radius: 14rpx;
+  overflow: hidden;
+  box-shadow: 0 2rpx 6rpx rgba(0, 0, 0, 0.05);
+  display: flex;
+}
+
+.recipe-image-container {
+  width: 140rpx;
+  height: 140rpx;
+  flex-shrink: 0;
+  position: relative;
+}
+
+.recipe-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.recipe-placeholder {
+  width: 100%;
+  height: 100%;
+  background-color: #e0e0e0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.placeholder-text {
+  font-size: 46rpx;
+  font-weight: bold;
+  color: #999;
+}
+
+.recipe-content {
+  flex: 1;
+  padding: 12rpx;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.recipe-header {
+  margin-bottom: 8rpx;
+}
+
+.recipe-name {
+  font-size: 26rpx;
+  font-weight: bold;
+  color: #333;
+  display: block;
+  margin-bottom: 4rpx;
+}
+
+.recipe-meta {
+  display: flex;
+  font-size: 20rpx;
+  color: #999;
+}
+
+.time, .calories {
+  margin-right: 12rpx;
+}
+
+.recipe-categories {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6rpx;
+}
+
+.category-tag {
+  font-size: 18rpx;
+  color: #8b4513;
+  background-color: rgba(139, 69, 19, 0.1);
+  padding: 2rpx 10rpx;
+  border-radius: 14rpx;
+}
+
+/* 加载状态样式 */
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 24rpx;
+}
+
+.loading {
+  width: 36rpx;
+  height: 36rpx;
+  border: 3rpx solid #f3f3f3;
+  border-top: 3rpx solid #8b4513;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 10rpx;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* 错误提示样式 */
+.error-container {
+  text-align: center;
+  padding: 24rpx;
+}
+
+.retry-btn {
+  margin-top: 16rpx;
+  background-color: #8b4513;
+  color: #fff;
+  border-radius: 28rpx;
+  font-size: 24rpx;
+  padding: 10rpx 36rpx;
+}
+
+/* 空状态样式 */
+.empty-container {
+  text-align: center;
+  padding: 24rpx;
+  color: #999;
+  font-size: 24rpx;
+}

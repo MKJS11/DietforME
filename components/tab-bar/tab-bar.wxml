@@ -1,0 +1,23 @@
+<!-- 底部导航栏 -->
+<view class="tab-bar glass-effect">
+  <view class="tab-item {{activeTab === 'home' ? 'active' : ''}}" bindtap="switchTab" data-tab="home">
+    <text class="tab-icon icon-home"></text>
+    <text class="tab-text">首页</text>
+  </view>
+  <view class="tab-item {{activeTab === 'recipe' ? 'active' : ''}}" bindtap="switchTab" data-tab="recipe">
+    <text class="tab-icon icon-food"></text>
+    <text class="tab-text">食谱</text>
+  </view>
+  <view class="tab-item {{activeTab === 'cart' ? 'active' : ''}}" bindtap="switchTab" data-tab="cart">
+    <text class="tab-icon icon-cart"></text>
+    <text class="tab-text">购物车</text>
+  </view>
+  <view class="tab-item {{activeTab === 'data' ? 'active' : ''}}" bindtap="switchTab" data-tab="history">
+    <text class="tab-icon icon-chart"></text>
+    <text class="tab-text">数据</text>
+  </view>
+  <view class="tab-item {{activeTab === 'my' ? 'active' : ''}}" bindtap="switchTab" data-tab="my">
+    <text class="tab-icon icon-person"></text>
+    <text class="tab-text">我的</text>
+  </view>
+</view> 

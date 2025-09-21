@@ -1,0 +1,191 @@
+<!--pages/my/my.wxml-->
+<view class="page-container">
+  <!-- 使用统一的导航栏组件 -->
+  <navigation-bar
+    title="我的"
+    background="var(--card-background)"
+    color="var(--primary-color)"
+  ></navigation-bar>
+
+  <scroll-view 
+    class="scrollarea" 
+    scroll-y="true"
+    enable-flex="true"
+    refresher-enabled="{{true}}"
+    refresher-threshold="50"
+    refresher-default-style="black"
+    refresher-background="#f2f2f7"
+    enhanced="true" 
+    show-scrollbar="false" 
+    bounces="true"
+    fast-deceleration="{{true}}"
+    scroll-anchoring="true"
+    scroll-with-animation="true">
+    <view class="container">
+      <!-- 用户信息卡片 -->
+      <view class="user-card">
+        <view class="user-avatar-container">
+          <image class="user-avatar" src="{{avatarUrl}}" mode="aspectFill"></image>
+        </view>
+        
+        <view class="user-info-container">
+          <block wx:if="{{isLoggedIn && userInfo}}">
+            <view class="user-name">{{userInfo.nickname || '健康饮食用户'}}</view>
+            <view class="user-id">ID: {{userInfo.openid || '未登录'}}</view>
+          </block>
+          <block wx:else>
+            <view class="user-name">未登录</view>
+            <view class="user-id">点击登录获取更多功能</view>
+          </block>
+        </view>
+        
+        <view class="user-action">
+          <block wx:if="{{isLoggedIn}}">
+            <button class="btn-edit" bindtap="editUserInfo" style="position: relative; left: 0rpx; top: 0rpx; width: 150rpx; display: flex; box-sizing: border-box">编辑</button>
+          </block>
+          <block wx:else>
+            <button class="btn-login" bindtap="handleLogin" loading="{{isLoading}}">登录</button>
+          </block>
+        </view>
+      </view>
+      
+      <!-- 健康数据卡片 -->
+      <view class="health-card">
+        <view class="card-header">
+          <text class="card-title">健康数据</text>
+          <text class="card-subtitle">最近更新</text>
+        </view>
+        
+        <view class="health-data-grid">
+          <view class="health-data-item">
+            <text class="data-label">年龄</text>
+            <text class="data-value">{{healthData.age}}</text>
+          </view>
+          <view class="health-data-item">
+            <text class="data-label">性别</text>
+            <text class="data-value">{{healthData.gender}}</text>
+          </view>
+          <view class="health-data-item">
+            <text class="data-label">身高</text>
+            <text class="data-value">{{healthData.height}}</text>
+          </view>
+          <view class="health-data-item">
+            <text class="data-label">体重</text>
+            <text class="data-value">{{healthData.weight}}</text>
+          </view>
+          <view class="health-data-item">
+            <text class="data-label">BMI</text>
+            <text class="data-value">{{healthData.bmi}}</text>
+          </view>
+          <view class="health-data-item">
+            <text class="data-label">状态</text>
+            <text class="data-value">{{healthData.bmiStatus}}</text>
+          </view>
+        </view>
+      </view>
+      
+      <!-- 健康状况卡片 -->
+      <block wx:if="{{isLoggedIn && userInfo}}">
+        <view class="health-status-card" wx:if="{{userInfo.diseases && userInfo.diseases.length > 0}}">
+          <view class="card-header">
+            <text class="card-title">健康状况</text>
+          </view>
+          
+          <view class="tag-container">
+            <block wx:for="{{userInfo.diseases}}" wx:key="*this">
+              <view class="tag tag-disease">{{diseaseLabels[item] || item}}</view>
+            </block>
+          </view>
+        </view>
+        
+        <!-- 健康生活方式卡片 -->
+        <view class="health-status-card" wx:if="{{userInfo.healthStatus && userInfo.healthStatus.length > 0}}">
+          <view class="card-header">
+            <text class="card-title">生活方式</text>
+          </view>
+          
+          <view class="tag-container">
+            <block wx:for="{{userInfo.healthStatus}}" wx:key="*this">
+              <view class="tag tag-lifestyle">{{healthStatusLabels[item] || item}}</view>
+            </block>
+          </view>
+        </view>
+        
+        <!-- 饮食偏好卡片 -->
+        <view class="health-status-card" wx:if="{{userInfo.dietPreferences && userInfo.dietPreferences.length > 0}}">
+          <view class="card-header">
+            <text class="card-title">饮食偏好</text>
+          </view>
+          
+          <view class="tag-container">
+            <block wx:for="{{userInfo.dietPreferences}}" wx:key="*this">
+              <view class="tag tag-diet">{{dietPreferenceLabels[item] || item}}</view>
+            </block>
+          </view>
+        </view>
+      </block>
+      
+      <!-- 功能列表 -->
+      
+      <view class="function-list">
+        <view class="function-item" bindtap="editUserInfo">
+          <view class="icon-container icon-personal">
+            <text class="icon-edit"></text>
+          </view>
+          <view class="function-name">个人信息</view>
+          <view class="function-arrow"></view>
+        </view>
+        
+        <view class="function-item" bindtap="goToCart">
+          <view class="icon-container icon-cart">
+            <text class="icon-cart">🛒</text>
+          </view>
+          <view class="function-name">购物车</view>
+          <view class="function-arrow"></view>
+        </view>
+        
+        <view class="function-item">
+          <view class="icon-container icon-history">
+            <text class="icon-history"></text>
+          </view>
+          <view class="function-name">饮食记录</view>
+          <view class="function-arrow"></view>
+        </view>
+        
+        <view class="function-item">
+          <view class="icon-container icon-favorites">
+            <text class="icon-favorite"></text>
+          </view>
+          <view class="function-name">我的收藏</view>
+          <view class="function-arrow"></view>
+        </view>
+        
+        <view class="function-item">
+          <view class="icon-container icon-settings">
+            <text class="icon-settings"></text>
+          </view>
+          <view class="function-name">设置</view>
+          <view class="function-arrow"></view>
+        </view>
+      </view>
+      
+      <!-- 退出登录按钮 -->
+      <block wx:if="{{isLoggedIn}}">
+        <view class="logout-container">
+          <button class="btn-logout" bindtap="handleLogout" style="position: relative; left: 0rpx; top: -39rpx">退出登录</button>
+        </view>
+      </block>
+      
+      <!-- 版本信息 -->
+      <view class="version-info">
+        <text>健康饮食 v1.0.0</text>
+      </view>
+    </view>
+  </scroll-view>
+
+  <!-- 底部安全区域 -->
+  <view class="safe-area-bottom"></view>
+  
+  <!-- 使用自定义底部导航栏组件 -->
+  <tab-bar activeTab="{{activeTab}}"></tab-bar>
+</view> 

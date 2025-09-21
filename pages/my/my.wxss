@@ -1,0 +1,441 @@
+/* pages/my/my.wxss */
+
+/* 页面容器 */
+.page-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background-color: #f2f2f7; /* 苹果系统浅灰背景色 */
+  position: relative;
+  font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', sans-serif;
+}
+
+/* 顶部状态栏 */
+.status-bar {
+  height: 44px;
+  width: 100%;
+  background-color: #ffffff;
+}
+
+/* 顶部导航栏 */
+.nav-bar {
+  height: 44px;
+  width: 100%;
+  display: flex;
+  justify-content: center; /* 中间标题居中 */
+  align-items: center;
+  padding: 0 16px;
+  background-color: rgba(255, 255, 255, 0.9); /* 半透明背景 */
+  backdrop-filter: blur(10px); /* 模糊效果 */
+  -webkit-backdrop-filter: blur(10px);
+  border-bottom: 0.5px solid rgba(0, 0, 0, 0.1); /* 更细的分隔线 */
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.app-title {
+  display: flex;
+  align-items: center;
+}
+
+.app-name {
+  font-size: 17px;
+  font-weight: 600;
+  color: #000000;
+}
+
+/* 滚动区域 */
+.scrollarea {
+  flex: 1;
+  overflow: hidden;
+}
+
+.container {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* 居中所有内容 */
+}
+
+/* 卡片公共样式 */
+.user-card, .health-card, .health-status-card, .function-list {
+  background-color: #ffffff;
+  border-radius: 12px;
+  margin-bottom: 16px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1); /* 更轻微的阴影 */
+  width: 100%; /* 确保所有卡片宽度一致 */
+  max-width: 650px; /* 限制最大宽度 */
+}
+
+/* 用户信息卡片 */
+.user-card {
+  display: flex;
+  align-items: center;
+  padding: 20px;
+}
+
+.user-avatar-container {
+  margin-right: 16px;
+}
+
+.user-avatar {
+  width: 60px;
+  height: 60px;
+  border-radius: 30px;
+  background-color: #f2f2f7;
+  border: 0.5px solid rgba(0, 0, 0, 0.1); /* 细边框 */
+}
+
+.user-info-container {
+  flex: 1;
+}
+
+.user-name {
+  font-size: 17px;
+  font-weight: 600;
+  color: #000000;
+  margin-bottom: 4px;
+}
+
+.user-id {
+  font-size: 14px;
+  color: #8e8e93; /* 苹果系统次要文本颜色 */
+}
+
+.user-action {
+  margin-left: 16px;
+}
+
+/* 按钮统一样式 */
+.btn-edit, .btn-login, .btn-logout {
+  font-size: 15px;
+  padding: 8px 16px;
+  border-radius: 8px;
+  border: none;
+  line-height: 1.2;
+  font-weight: 500;
+  height: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-login {
+  background-color: #34c759; /* 苹果健康绿色 */
+  color: #ffffff;
+}
+
+.btn-edit {
+  background-color: rgba(52, 199, 89, 0.1); /* 淡绿色背景 */
+  color: #34c759; /* 绿色文字 */
+}
+
+.btn-logout {
+  background-color: rgba(255, 59, 48, 0.1); /* 半透明红色背景 */
+  color: #ff3b30; /* 苹果系统红色 */
+  font-size: 15px;
+  width: 100%;
+  text-align: center;
+  height: 44px;
+  max-width: 650px; /* 限制最大宽度 */
+}
+
+/* 健康数据卡片 */
+.health-card {
+  padding: 20px;
+}
+
+/* 卡片标题区域 */
+.card-header {
+  margin-bottom: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 22px;
+}
+
+.card-title {
+  font-size: 17px;
+  font-weight: 600;
+  color: #000000;
+}
+
+.card-subtitle {
+  font-size: 13px;
+  color: #8e8e93;
+}
+
+.health-data-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+.health-data-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 12px 8px;
+  border-radius: 8px;
+  background-color: rgba(52, 199, 89, 0.05); /* 极淡绿色背景，健康风格 */
+  height: 60px;
+  justify-content: center;
+}
+
+.data-label {
+  font-size: 13px;
+  color: #8e8e93;
+  margin-bottom: 6px;
+}
+
+.data-value {
+  font-size: 17px;
+  font-weight: 500;
+  color: #000000;
+}
+
+/* 健康状况卡片 */
+.health-status-card {
+  padding: 20px;
+}
+
+.tag-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.tag {
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  height: 28px;
+  display: flex;
+  align-items: center;
+}
+
+.tag-disease {
+  background-color: rgba(255, 59, 48, 0.1); /* 半透明红色背景 */
+  color: #ff3b30; /* 苹果系统红色 */
+}
+
+.tag-lifestyle {
+  background-color: rgba(52, 199, 89, 0.1); /* 健康绿色背景 */
+  color: #34c759; /* 健康绿色 */
+}
+
+.tag-diet {
+  background-color: rgba(52, 199, 89, 0.1); /* 半透明绿色背景 */
+  color: #34c759; /* 苹果系统绿色 */
+}
+
+/* 设置与工具标题 */
+.section-title {
+  font-size: 20px;
+  font-weight: 600;
+  color: #000000;
+  margin: 24px 0 16px 0;
+  height: 24px;
+  width: 100%;
+  max-width: 650px; /* 限制最大宽度 */
+  text-align: left;
+}
+
+/* 功能列表 */
+.function-list {
+  padding: 0;
+  overflow: hidden;
+}
+
+.function-item {
+  display: flex;
+  align-items: center;
+  padding: 16px 20px;
+  border-bottom: 0.5px solid rgba(0, 0, 0, 0.1); /* 更细的分隔线 */
+  height: 56px; /* 统一高度 */
+}
+
+.function-item:last-child {
+  border-bottom: none;
+}
+
+/* 图标统一样式 */
+.function-icon, .icon-container {
+  width: 32px;
+  height: 32px;
+  min-width: 32px; /* 确保最小宽度 */
+  margin-right: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+}
+
+.function-name {
+  flex: 1;
+  font-size: 16px;
+  color: #000000;
+}
+
+.function-arrow {
+  width: 8px;
+  height: 8px;
+  border-top: 1.5px solid #c7c7cc; /* 苹果系统箭头颜色 */
+  border-right: 1.5px solid #c7c7cc;
+  transform: rotate(45deg);
+}
+
+/* 退出登录按钮 */
+.logout-container {
+  margin: 24px 0;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+/* 底部安全区域 */
+.safe-area-bottom {
+  height: 34px;
+  width: 100%;
+  background-color: #ffffff;
+}
+
+/* 底部导航栏 */
+.tab-bar {
+  height: 50px;
+  width: 100%;
+  display: flex;
+  background-color: rgba(255, 255, 255, 0.9); /* 半透明背景 */
+  backdrop-filter: blur(10px); /* 模糊效果 */
+  -webkit-backdrop-filter: blur(10px);
+  border-top: 0.5px solid rgba(0, 0, 0, 0.1); /* 更细的分隔线 */
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+}
+
+.tab-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 8rpx 0 !important;
+  height: 50px;
+}
+
+.tab-icon {
+  font-size: 44rpx !important;
+  margin-bottom: 8rpx !important;
+  color: #8e8e93; /* 苹果系统图标非激活颜色 */
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+}
+
+.tab-text {
+  font-size: 22rpx !important;
+  color: #8e8e93;
+  font-weight: 500;
+  height: 14px;
+  line-height: 1.2 !important;
+}
+
+.tab-item.active .tab-icon,
+.tab-item.active .tab-text {
+  color: #34c759; /* 健康绿色 */
+}
+
+/* 图标样式（使用 SF Symbols 风格的 emoji） */
+.icon-home::before, .icon-food::before, .icon-chart::before, .icon-person::before,
+.icon-edit::before, .icon-history::before, .icon-favorite::before, .icon-settings::before {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+
+.icon-home::before {
+  content: "🏠";
+}
+
+.icon-food::before {
+  content: "🍽️";
+}
+
+.icon-chart::before {
+  content: "📊";
+}
+
+.icon-person::before {
+  content: "👤";
+}
+
+.icon-edit::before {
+  content: "✏️";
+}
+
+.icon-history::before {
+  content: "🕒";
+}
+
+.icon-favorite::before {
+  content: "❤️";
+}
+
+.icon-settings::before {
+  content: "⚙️";
+}
+
+/* 图标背景色 */
+.icon-personal {
+  background-color: rgba(52, 199, 89, 0.1); /* 健康绿色背景 */
+  color: #34c759; /* 健康绿色 */
+}
+
+.icon-history {
+  background-color: rgba(52, 199, 89, 0.1); /* 健康绿色背景 */
+  color: #34c759; /* 健康绿色 */
+}
+
+.icon-favorites {
+  background-color: rgba(52, 199, 89, 0.1); /* 健康绿色背景 */
+  color: #34c759; /* 健康绿色 */
+}
+
+.icon-settings {
+  background-color: rgba(52, 199, 89, 0.1); /* 健康绿色背景 */
+  color: #34c759; /* 健康绿色 */
+}
+
+/* 在其他图标样式附近添加购物车图标样式 */
+.icon-cart {
+  background-color: #ff9500;
+  color: white;
+  font-size: 24rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 版本信息 */
+.version-info {
+  text-align: center;
+  font-size: 12px;
+  color: #8e8e93;
+  margin-top: 12px;
+  margin-bottom: 70px; /* 为底部导航腾出空间 */
+  padding: 12px;
+  height: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+} 

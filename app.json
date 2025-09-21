@@ -1,0 +1,51 @@
+{
+  "pages": [
+    "pages/onboarding/onboarding",
+    "pages/index/index",
+    "pages/recipe/list",
+    "pages/my/my",
+    "pages/details/detail",
+    "pages/todayr/todayr",
+    "pages/record/record",
+    "pages/history/history",
+    "pages/cart/cart"
+  ],
+  "window": {
+    "navigationBarTextStyle": "black",
+    "navigationStyle": "custom"
+  },
+  "tabBar": {
+    "custom": true,
+    "color": "#566b65",
+    "selectedColor": "#1e3a32",
+    "backgroundColor": "#ffffff",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "首页"
+      },
+      {
+        "pagePath": "pages/recipe/list",
+        "text": "食谱"
+      },
+      {
+        "pagePath": "pages/history/history",
+        "text": "数据"
+      },
+      {
+        "pagePath": "pages/my/my",
+        "text": "我的"
+      }
+    ]
+  },
+  "style": "v2",
+  "componentFramework": "glass-easel",
+  "sitemapLocation": "sitemap.json",
+  "lazyCodeLoading": "requiredComponents",
+  "cloud": true,
+  "permission": {
+    "scope.camera": {
+      "desc": "拍照识别食物需要使用您的相机权限"
+    }
+  }
+}

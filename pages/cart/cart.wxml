@@ -1,0 +1,110 @@
+7<!--pages/cart/cart.wxml-->
+<view class="container" style="position: relative; left: 0rpx; top: 91rpx">
+  <!-- 返回按钮 -->
+  <view class="back-button action-btn" bindtap="goBack" style="position: fixed; left: 20rpx; top: 110rpx">
+    返回
+  </view>
+  <!-- 空购物车状态 -->
+  <view class="empty-cart" wx:if="{{emptyCart}}">
+    <view class="empty-cart-icon">🛒</view>
+    <text class="empty-cart-text">购物车是空的</text>
+    <text class="empty-cart-tip">您可以在菜谱详情页添加食材到购物车</text>
+    <view class="empty-cart-doodles">
+      <text class="doodle doodle-1">🥗</text>
+      <text class="doodle doodle-2">🌿</text>
+      <text class="doodle doodle-3">🍚</text>
+      <text class="doodle doodle-4">🍲</text>
+    </view>
+  </view>
+  
+  <!-- 购物车内容 -->
+  <block wx:else>
+    <!-- 头部操作区 -->
+    <view class="header-container" style="width: 726rpx; display: block; box-sizing: content-box; left: NaNrpx; top: 0rpx">
+      <view class="header" style="position: relative; left: 14rpx; top: 35rpx; width: 698rpx; display: flex; box-sizing: border-box; height: 119rpx">
+        <view class="title-container">
+          <text class="title-icon" style="position: relative; left: 157rpx; top: 0rpx">🌱</text>
+          <text class="title" style="position: relative; left: 189rpx; top: 2rpx">购物车</text>
+        </view>
+        <view class="actions">
+          <view class="action-btn edit" bindtap="toggleEditMode">
+            {{editMode ? '完成' : '编辑'}}
+          </view>
+          <view class="action-btn clear" bindtap="clearCart">
+            清空
+          </view>
+        </view>
+      </view>
+      <view class="subtitle" style="position: relative; left: 0rpx; top: 46rpx; height: 51rpx; display: block; box-sizing: border-box">菜品来源有机食品供应商</view>
+    </view>
+    
+    <!-- 食材列表 -->
+    <scroll-view scroll-y="true" class="cart-list" style="height: 1457rpx; display: block; box-sizing: border-box">
+      <view class="doodle-decorations">
+        <text class="cart-doodle cart-doodle-1">🌱</text>
+        <text class="cart-doodle cart-doodle-2">🥕</text>
+        <text class="cart-doodle cart-doodle-3">🥔</text>
+      </view>
+      <view wx:for="{{cartItems}}" wx:key="uniqueId" class="cart-item-container">
+        <view class="cart-item {{item.checked ? 'checked' : ''}}">
+          <!-- 编辑模式显示选择框 -->
+          <view wx:if="{{editMode}}" class="select-box" catchtap="toggleItemSelect" data-index="{{index}}">
+            <view class="select-inner {{item.selected ? 'selected' : ''}}"></view>
+          </view>
+          
+          <!-- 非编辑模式显示勾选框 -->
+          <view wx:else class="check-box" catchtap="toggleItemCheck" data-index="{{index}}">
+            <text class="check-icon">{{item.checked ? '✓' : ''}}</text>
+          </view>
+          
+          <!-- 食材信息 -->
+          <view class="item-info">
+            <view class="item-name">{{item.name}}</view>
+            <view class="item-amount">{{item.amount}}{{item.unit}}</view>
+            <view wx:if="{{item.recipe}}" class="item-recipe" catchtap="goToRecipe" data-recipe="{{item.recipe}}">
+              来自：{{item.recipe}}
+            </view>
+          </view>
+        </view>
+      </view>
+    </scroll-view>
+    
+    <!-- 底部工具栏 - 编辑模式 -->
+    <view class="footer edit-footer" wx:if="{{editMode}}">
+      <view class="select-all" bindtap="toggleSelectAll">
+        <view class="select-box">
+          <view class="select-inner {{allSelected ? 'selected' : ''}}"></view>
+        </view>
+        <text>全选</text>
+      </view>
+      <view class="selected-info">
+        已选: {{selectedCount}}
+      </view>
+      <view class="delete-btn" bindtap="deleteSelected">
+        删除
+      </view>
+    </view>
+    
+    <!-- 底部工具栏 - 正常模式 -->
+    <view class="footer checkout-footer" wx:else>
+      <view class="checkout-select-all" bindtap="toggleAllChecked">
+        <view class="select-box">
+          <view class="select-inner {{allChecked ? 'selected' : ''}}"></view>
+        </view>
+        <text>全选</text>
+      </view>
+      <view class="total-info">
+        <view>
+          <text class="total-label">总计：</text>
+          <text class="total-count">{{cartItems.length}}个食材</text>
+        </view>
+        <view class="total-checked">
+          已选购：{{checkedCount}}个
+        </view>
+      </view>
+      <view class="checkout-btn" bindtap="checkout">
+        <text>结算</text>
+      </view>
+    </view>
+  </block>
+</view> 

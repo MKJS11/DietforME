@@ -1,0 +1,92 @@
+<!-- pages/record/record.wxml -->
+<view class="container">
+  <view class="header" style="position: relative; left: 0rpx; top: 227rpx; width: 534rpx; display: flex; box-sizing: border-box; height: 107rpx">
+    <view class="back-button" bindtap="goBack" style="position: relative; left: -113rpx; top: -170rpx">
+      <text class="back-icon">←</text>
+    </view>
+    <text class="title">食物识别</text>
+  </view>
+  
+  <view class="description" style="position: relative; left: 0rpx; top: 241rpx">
+    <text>拍照识别食物和卡路里</text>
+  </view>
+  
+  <view class="content">
+    <!-- 相机区域 -->
+    <view class="camera-container">
+      <camera device-position="back" flash="off" binderror="cameraError" class="camera" style="position: relative; left: 2rpx; top: 231rpx; width: 628rpx; height: 627rpx; display: block; box-sizing: border-box">
+        <view class="camera-frame" style="width: 444rpx; height: 417rpx; display: block; box-sizing: border-box; left: 314rpx; top: 314rpx"></view>
+        <view class="camera-hint">
+          <text>请将食物放在框内进行拍摄</text>
+        </view>
+      </camera>
+      <view class="controls">
+        <button class="take-photo-btn" bindtap="takePhoto" disabled="{{recognizing}}" style="position: relative; left: -4rpx; top: 250rpx; width: 302rpx; display: block; box-sizing: border-box">
+          <text style="position: relative; left: -1rpx; top: -13rpx">{{recognizing ? '识别中...' : '拍照识别'}}</text>
+        </button>
+      </view>
+    </view>
+  </view>
+</view>
+
+<!-- 分析结果模态框 -->
+<view class="modal-mask" wx:if="{{showModal}}">
+  <view class="modal-content">
+    <view class="modal-header">
+      <text class="modal-title">食物分析结果</text>
+    </view>
+    
+    <view class="modal-body">
+      <view class="result-item">
+        <text class="label">食物名称：</text>
+        <text class="value">{{analysisResult.name}}</text>
+      </view>
+      
+      <view class="result-item">
+        <text class="label">热量：</text>
+        <text class="value">{{analysisResult.calories}} 千卡</text>
+      </view>
+
+      <view class="result-item">
+        <text class="label">蛋白质：</text>
+        <text class="value">{{analysisResult.protein}}g</text>
+      </view>
+
+      <view class="result-item">
+        <text class="label">碳水化合物：</text>
+        <text class="value">{{analysisResult.carbs}}g</text>
+      </view>
+
+      <view class="result-item">
+        <text class="label">脂肪：</text>
+        <text class="value">{{analysisResult.fat}}g</text>
+      </view>
+      
+      <view class="result-item">
+        <text class="label">GI程度：</text>
+        <text class="value {{analysisResult.GI_level === '高' ? 'high' : analysisResult.GI_level === '中' ? 'middle' : 'low'}}">
+          {{analysisResult.GI_level}}
+        </text>
+      </view>
+      
+      <view class="result-item">
+        <text class="label">GL程度：</text>
+        <text class="value {{analysisResult.GL_level === '高' ? 'high' : analysisResult.GL_level === '中' ? 'middle' : 'low'}}">
+          {{analysisResult.GL_level}}
+        </text>
+      </view>
+      
+      <view class="suggestion">
+        <text class="label">食用建议：</text>
+        <text class="suggestion-text">{{analysisResult.suggestion}}</text>
+      </view>
+    </view>
+    
+    <view class="modal-footer">
+      <button class="btn-cancel" bindtap="closeModal" disabled="{{saving}}">关闭</button>
+      <button class="btn-confirm" bindtap="confirmModal" disabled="{{saving}}">
+        {{saving ? '保存中...' : '保存记录'}}
+      </button>
+    </view>
+  </view>
+</view> 

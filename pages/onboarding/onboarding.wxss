@@ -1,0 +1,272 @@
+/* pages/onboarding/onboarding.wxss */
+.ios-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background-color: #ffffff;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", sans-serif;
+}
+
+.ios-status-bar {
+  height: 44rpx;
+  width: 100%;
+}
+
+.ios-header {
+  padding: 40rpx 40rpx 30rpx;
+  text-align: center;
+}
+
+.ios-title {
+  font-size: 44rpx;
+  font-weight: 600;
+  color: #000000;
+  margin-bottom: 8rpx;
+}
+
+.ios-subtitle {
+  font-size: 28rpx;
+  color: #8e8e93;
+}
+
+.ios-progress {
+  padding: 0 40rpx 20rpx;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.ios-progress-dots {
+  display: flex;
+}
+
+.ios-progress-dot {
+  width: 16rpx;
+  height: 16rpx;
+  border-radius: 50%;
+  background-color: #e5e5ea;
+  margin-right: 12rpx;
+  transition: transform 0.3s ease, background-color 0.3s ease, width 0.3s ease;
+}
+
+.ios-progress-dot.active {
+  background-color: #007aff;
+  width: 32rpx;
+  border-radius: 8rpx;
+}
+
+.ios-progress-text {
+  font-size: 24rpx;
+  color: #8e8e93;
+}
+
+.ios-content {
+  flex: 1;
+  padding: 0 40rpx;
+  overflow: auto;
+}
+
+.ios-step {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.ios-step-header {
+  margin-bottom: 40rpx;
+}
+
+.ios-step-title {
+  font-size: 34rpx;
+  font-weight: 600;
+  color: #000000;
+  margin-bottom: 12rpx;
+}
+
+.ios-step-desc {
+  font-size: 28rpx;
+  color: #8e8e93;
+  line-height: 1.4;
+}
+
+.ios-form {
+  flex: 1;
+}
+
+.ios-form-item {
+  margin-bottom: 40rpx;
+}
+
+.ios-label {
+  display: block;
+  font-size: 28rpx;
+  font-weight: 500;
+  color: #000000;
+  margin-bottom: 16rpx;
+}
+
+.ios-input {
+  width: 100%;
+  height: 88rpx;
+  background-color: #f2f2f7;
+  border-radius: 16rpx;
+  padding: 0 24rpx;
+  box-sizing: border-box;
+  font-size: 32rpx;
+  color: #000000;
+  border: none;
+}
+
+.ios-segmented-control {
+  width: 100%;
+  margin-bottom: 20rpx;
+}
+
+.ios-segmented-items {
+  display: flex;
+  background-color: #f2f2f7;
+  border-radius: 16rpx;
+  padding: 4rpx;
+  overflow: hidden;
+}
+
+.ios-segmented-item {
+  flex: 1;
+  height: 72rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s ease, color 0.2s ease;
+  position: relative;
+}
+
+.ios-segmented-item.active {
+  background-color: #ffffff;
+  border-radius: 12rpx;
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.1);
+}
+
+.ios-segmented-item-hover {
+  opacity: 0.8;
+  background-color: rgba(255, 255, 255, 0.5);
+  border-radius: 12rpx;
+}
+
+.ios-segmented-text {
+  font-size: 28rpx;
+  color: #8e8e93;
+  transition: color 0.2s ease;
+  padding: 0 16rpx;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ios-segmented-item.active .ios-segmented-text {
+  color: #007aff;
+  font-weight: 500;
+}
+
+.ios-checkbox-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.ios-checkbox-item {
+  display: flex;
+  align-items: center;
+  padding: 24rpx 0;
+  border-bottom: 1rpx solid #f2f2f7;
+}
+
+.ios-checkbox-item:last-child {
+  border-bottom: none;
+}
+
+.ios-checkbox {
+  width: 44rpx;
+  height: 44rpx;
+  border-radius: 50%;
+  border: 2rpx solid #c7c7cc;
+  margin-right: 20rpx;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.ios-checkbox.checked {
+  background-color: #007aff;
+  border-color: #007aff;
+}
+
+.ios-checkbox-inner {
+  width: 20rpx;
+  height: 12rpx;
+  border-left: 4rpx solid #ffffff;
+  border-bottom: 4rpx solid #ffffff;
+  transform: rotate(-45deg);
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  position: relative;
+  top: -2rpx;
+}
+
+.ios-checkbox.checked .ios-checkbox-inner {
+  opacity: 1;
+}
+
+.ios-checkbox-label {
+  font-size: 32rpx;
+  color: #000000;
+  flex: 1;
+}
+
+.ios-footer {
+  padding: 30rpx 40rpx 50rpx;
+  background-color: rgba(255, 255, 255, 0.9);
+  border-top: 0.5rpx solid rgba(0, 0, 0, 0.1);
+}
+
+.ios-skip {
+  text-align: center;
+  font-size: 28rpx;
+  color: #8e8e93;
+  margin-bottom: 30rpx;
+}
+
+.ios-buttons {
+  display: flex;
+  justify-content: space-between;
+}
+
+.ios-button {
+  width:50rpx;
+  height: 90rpx;
+  border-radius: 40rpx;
+  font-size: 32rpx;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.2s ease;
+  border: none;
+  margin: 0 10rpx;
+}
+
+.ios-button.primary {
+  background-color: #007aff;
+  color: #ffffff;
+}
+
+.ios-button.secondary {
+  background-color: #f2f2f7;
+  color: #007aff;
+}
+
+.ios-button-pressed {
+  opacity: 0.8;
+} 

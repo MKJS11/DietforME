@@ -1,0 +1,96 @@
+<view class="container">
+  <!-- 顶部返回按钮 -->
+  <view class="header">
+    <view class="back-btn" bindtap="onBackTap" style="position: relative; left: 2rpx; top: 81rpx">
+      <text class="back-arrow">←</text>
+    </view>
+    <view class="refresh-btn" bindtap="onRefreshTap" style="position: relative; right: 2rpx; top: 1500rpx; left: -6rpx">
+      <text class="refresh-icon" style="width: 25rpx; display: block; box-sizing: border-box; position: relative; left: 0rpx; top: 0rpx; height: 62rpx">↻</text>
+    </view>
+  </view>
+
+  <!-- 主要内容区域 -->
+  <view class="content-container" style="height: 897rpx; display: block; box-sizing: border-box; position: relative; left: 0rpx; top: 297rpx">
+    <!-- 日期和天气卡片 -->
+    <view class="weather-card" style="position: relative; left: 0rpx; top: -149rpx; width: 696rpx; display: flex; box-sizing: border-box">
+      <view class="date-info">
+        <view class="current-date">{{currentDate}}</view>
+        <view class="day-name">{{dayName}}</view>
+      </view>
+      <view class="weather-info">
+        <view class="temperature">{{weather.temperature}}°</view>
+        <view class="weather-desc">{{weather.description}}</view>
+        <view class="location">{{weather.location}}</view>
+      </view>
+    </view>
+
+    <!-- 今日推荐食谱区域 -->
+    <view class="recipe-section" style="height: 958rpx; display: block; box-sizing: border-box; left: 0rpx; top: -81rpx; position: relative; width: 696rpx">
+      <view class="section-header" style="position: relative; left: 0rpx; top: -70rpx">
+        <text class="section-title" style="position: relative; left: 0rpx; top: 32rpx">今日推荐</text>
+        <text class="section-subtitle" style="position: relative; left: 0rpx; top: 55rpx">根据您的健康状况推荐的营养均衡食谱</text>
+      </view>
+
+      <!-- 加载状态 -->
+      <view class="loading-container" wx:if="{{loading}}">
+        <view class="loading"></view>
+        <text>正在获取今日食谱...</text>
+      </view>
+
+      <!-- 错误提示 -->
+      <view class="error-container" wx:elif="{{error}}">
+        <text>{{error}}</text>
+        <button class="retry-btn" bindtap="loadTodayRecipes">重试</button>
+      </view>
+
+      <!-- 食谱列表 -->
+      <view class="recipe-list" wx:elif="{{recipes.length > 0}}">
+        <view 
+          wx:for="{{recipes}}" 
+          wx:key="name" 
+          class="recipe-item"
+          bindtap="onRecipeTap"
+          data-recipe="{{item}}"
+        >
+          <view class="recipe-card">
+            <view class="recipe-image-container">
+              <view class="recipe-placeholder" wx:if="{{!item.image}}">
+                <text class="placeholder-text">{{item.name[0]}}</text>
+              </view>
+              <image 
+                wx:else 
+                class="recipe-image" 
+                src="{{item.image}}" 
+                mode="aspectFill"
+              ></image>
+            </view>
+            <view class="recipe-content">
+              <view class="recipe-header">
+                <text class="recipe-name">{{item.name}}</text>
+                <view class="recipe-meta">
+                  <text class="time">{{item.time}}</text>
+                  <text class="calories">{{item.calories}}</text>
+                </view>
+              </view>
+              <view class="recipe-categories">
+                <view 
+                  wx:for="{{item.categories}}" 
+                  wx:for-item="category" 
+                  wx:key="*this"
+                  class="category-tag"
+                >
+                  {{category}}
+                </view>
+              </view>
+            </view>
+          </view>
+        </view>
+      </view>
+
+      <!-- 空状态 -->
+      <view class="empty-container" wx:else>
+        <text>暂无推荐食谱</text>
+      </view>
+    </view>
+  </view>
+</view>

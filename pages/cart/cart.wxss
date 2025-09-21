@@ -1,0 +1,520 @@
+/* pages/cart/cart.wxss */
+
+.container {
+  padding: 0;
+  background-color: #f8f8f8;
+  background-image: 
+    radial-gradient(circle, rgba(180, 230, 180, 0.2) 8px, transparent 8px),
+    radial-gradient(circle, rgba(140, 210, 140, 0.15) 15px, transparent 15px);
+  background-size: 80px 80px, 120px 120px;
+  background-position: 0 0, 40px 40px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* 空购物车状态 */
+.empty-cart {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 70vh;
+  padding: 30rpx;
+  position: relative;
+}
+
+.empty-cart-icon {
+  font-size: 100rpx;
+  margin-bottom: 30rpx;
+  color: #999;
+}
+
+.empty-cart-text {
+  font-size: 36rpx;
+  color: #333;
+  margin-bottom: 20rpx;
+  font-weight: bold;
+}
+
+.empty-cart-tip {
+  font-size: 28rpx;
+  color: #999;
+  text-align: center;
+}
+
+/* 空购物车装饰 */
+.empty-cart-doodles {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.doodle {
+  position: absolute;
+  font-size: 40rpx;
+  opacity: 0.2;
+  animation: float 10s infinite ease-in-out;
+}
+
+.doodle-1 {
+  top: 20%;
+  left: 15%;
+  animation-delay: 0s;
+  transform: rotate(-15deg);
+}
+
+.doodle-2 {
+  top: 30%;
+  right: 20%;
+  animation-delay: 2s;
+  transform: rotate(10deg);
+}
+
+.doodle-3 {
+  bottom: 25%;
+  left: 25%;
+  animation-delay: 1s;
+  transform: rotate(-5deg);
+}
+
+.doodle-4 {
+  bottom: 30%;
+  right: 25%;
+  animation-delay: 3s;
+  transform: rotate(8deg);
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0) rotate(var(--rotation, 0deg));
+  }
+  50% {
+    transform: translateY(-15rpx) rotate(var(--rotation, 0deg));
+  }
+}
+
+/* 头部操作区 */
+.header-container {
+  padding: 10rpx 20rpx 5rpx;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background-color: rgba(248, 248, 248, 0.95);
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20rpx 25rpx;
+  background: linear-gradient(135deg, #3a6351, #4c956c);
+  border-radius: 20rpx;
+  box-shadow: 0 6rpx 16rpx rgba(0, 0, 0, 0.15);
+  margin-bottom: 15rpx;
+  position: relative;
+  overflow: hidden;
+}
+
+/* 简笔装饰元素 */
+.header::before {
+  content: '✿';
+  position: absolute;
+  font-size: 50rpx;
+  color: rgba(255, 255, 255, 0.1);
+  right: 15rpx;
+  bottom: -10rpx;
+}
+
+.header::after {
+  content: '❀';
+  position: absolute;
+  font-size: 40rpx;
+  color: rgba(255, 255, 255, 0.1);
+  left: 15rpx;
+  top: -5rpx;
+}
+
+.subtitle {
+  font-size: 24rpx;
+  color: #666;
+  text-align: center;
+  margin-bottom: 15rpx;
+  margin-top: -5rpx;
+  font-style: italic;
+  letter-spacing: 1rpx;
+}
+
+.title-container {
+  display: flex;
+  align-items: center;
+}
+
+.title-icon {
+  font-size: 40rpx;
+  margin-right: 15rpx;
+  color: #fafafa;
+}
+
+.title {
+  font-size: 36rpx;
+  font-weight: bold;
+  color: #fafafa;
+  text-shadow: 1rpx 1rpx 3rpx rgba(0, 0, 0, 0.2);
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+}
+
+.action-btn {
+  margin-left: 20rpx;
+  font-size: 28rpx;
+  padding: 8rpx 20rpx;
+  border-radius: 30rpx;
+  background-color: rgba(255, 255, 255, 0.8);
+  box-shadow: 0 2rpx 5rpx rgba(0, 0, 0, 0.15);
+}
+
+.edit {
+  color: #666;
+}
+
+.clear {
+  color: #ff6b6b;
+}
+
+/* 食材列表 */
+.cart-list {
+  flex: 1;
+  padding: 0 0 120rpx;
+  max-height: calc(100vh - 240rpx); /* 减去头部和底部区域高度 */
+}
+
+/* 浅黄色物品区域框 */
+.cart-list::before {
+  content: '';
+  position: absolute;
+  top: 140rpx;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 718rpx;
+  height: calc(100% - 240rpx);
+  background-color: rgba(189, 177, 120, 0.5);
+  border: 2rpx dashed rgba(255, 217, 102, 0.7);
+  border-radius: 25rpx;
+  z-index: -1;
+  box-shadow: inset 0 0 30rpx rgba(255, 222, 125, 0.2);
+}
+
+/* 添加简笔风格的装饰元素 */
+.cart-list::after {
+  content: '';
+  position: absolute;
+  background-image: 
+    radial-gradient(circle, transparent 50%, rgba(76, 149, 108, 0.1) 50%),
+    radial-gradient(circle, rgba(76, 149, 108, 0.05) 30%, transparent 30%);
+  background-size: 100rpx 100rpx, 60rpx 60rpx;
+  background-position: 0 0, 30rpx 30rpx;
+  top: 140rpx;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 718rpx;
+  height: calc(100% - 240rpx);
+  border-radius: 25rpx;
+  z-index: -1;
+  opacity: 0.6;
+}
+
+.cart-item-container {
+  margin-bottom: 15rpx;
+  border-radius: 15rpx;
+  overflow: hidden;
+  box-shadow: 0 4rpx 10rpx rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s ease;
+  width: 698rpx;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.cart-item-container:active {
+  transform: scale(0.98);
+}
+
+.cart-item {
+  display: flex;
+  align-items: center;
+  padding: 12rpx 15rpx;
+  background: linear-gradient(to right, #ffffe7, #fffdf4);
+  position: relative;
+  height: auto;
+  min-height: 90rpx;
+  border-radius: 20rpx;
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+/* 简笔风格的项目装饰 */
+.cart-item::before {
+  content: '🥕';
+  position: absolute;
+  font-size: 24rpx;
+  right: 10rpx;
+  bottom: 5rpx;
+  opacity: 0.15;
+  transform: rotate(15deg);
+}
+
+.cart-item:nth-child(2n)::before {
+  content: '🥬';
+}
+
+.cart-item:nth-child(3n)::before {
+  content: '🍅';
+}
+
+.cart-item:nth-child(4n)::before {
+  content: '🥦';
+}
+
+.cart-item.checked {
+  opacity: 0.85;
+  background: linear-gradient(to right, #e7e7eb, #d8d8df);
+}
+
+.select-box, .check-box {
+  width: 40rpx;
+  height: 40rpx;
+  border-radius: 50%;
+  border: 2rpx solid #4c956c;
+  margin-right: 20rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  background-color: #fff;
+  box-shadow: 0 3rpx 6rpx rgba(0, 0, 0, 0.15);
+  /* 简笔风格边框 */
+  position: relative;
+}
+
+.select-box::after, .check-box::after {
+  content: '';
+  position: absolute;
+  top: -4rpx;
+  left: -4rpx;
+  right: -4rpx;
+  bottom: -4rpx;
+  border: 1rpx dotted rgba(76, 149, 108, 0.3);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.select-inner {
+  width: 22rpx;
+  height: 22rpx;
+  border-radius: 50%;
+  background-color: transparent;
+  transition: all 0.2s ease;
+}
+
+.select-inner.selected {
+  background-color: #ecfff7;
+}
+
+.check-icon {
+  color: #3a6351;
+  font-size: 26rpx;
+  font-weight: bold;
+}
+
+.item-info {
+  flex: 1;
+  padding: 0;
+}
+
+.item-name {
+  font-size: 28rpx;
+  color: #333;
+  margin-bottom: 6rpx;
+  font-weight: bold;
+}
+
+.item-amount {
+  font-size: 24rpx;
+  color: #666;
+  margin-bottom: 6rpx;
+}
+
+.item-recipe {
+  font-size: 20rpx;
+  color: #6e7562;
+  margin-top: 4rpx;
+  display: inline-block;
+  padding: 2rpx 6rpx;
+  background-color: rgba(7, 193, 96, 0.1);
+  border-radius: 6rpx;
+}
+
+/* 底部工具栏 */
+.footer {
+  display: flex;
+  align-items: center;
+  padding: 20rpx 30rpx;
+  background-color: rgba(255, 255, 255, 0.9);
+  border-top: 1rpx dashed #ddd;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  box-shadow: 0 -4rpx 10rpx rgba(0, 0, 0, 0.08);
+}
+
+/* 编辑模式底部栏 */
+.edit-footer {
+  display: flex;
+  align-items: center;
+}
+
+.select-all {
+  display: flex;
+  align-items: center;
+}
+
+.select-all text {
+  font-size: 28rpx;
+  color: rgb(240, 224, 224);
+  margin-left: 10rpx;
+}
+
+.selected-info {
+  flex: 1;
+  text-align: center;
+  font-size: 28rpx;
+  color: rgb(240, 219, 219);
+}
+
+.delete-btn {
+  background-color: #e76f51;
+  color: #fff;
+  font-size: 30rpx;
+  padding: 15rpx 40rpx;
+  border-radius: 40rpx;
+  box-shadow: 0 4rpx 8rpx rgba(231, 111, 81, 0.3);
+}
+
+/* 结算模式底部栏 */
+.checkout-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.total-info {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.total-label {
+  font-size: 28rpx;
+  color: #333;
+  margin-right: 10rpx;
+}
+
+.total-count {
+  font-size: 28rpx;
+  color: #416956;
+  font-weight: bold;
+}
+
+.total-checked {
+  font-size: 24rpx;
+  color: #07c160;
+  margin-top: 5rpx;
+}
+
+.checkout-btn {
+  background: linear-gradient(135deg, #3a6351, #4c956c);
+  color: #fff;
+  font-size: 32rpx;
+  font-weight: bold;
+  padding: 20rpx 60rpx;
+  border-radius: 40rpx;
+  box-shadow: 0 4rpx 12rpx rgba(58, 99, 81, 0.3);
+  transition: all 0.2s;
+}
+
+.checkout-btn:active {
+  transform: scale(0.98);
+  box-shadow: 0 2rpx 6rpx rgba(58, 99, 81, 0.3);
+}
+
+/* 底部全选 */
+.checkout-select-all {
+  display: flex;
+  align-items: center;
+  margin-right: 20rpx;
+}
+
+.checkout-select-all .select-box {
+  margin-right: 8rpx;
+}
+
+.checkout-select-all text {
+  font-size: 24rpx;
+  color: #666;
+}
+
+/* 购物车列表装饰 */
+.doodle-decorations {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.cart-doodle {
+  position: absolute;
+  font-size: 28rpx;
+  opacity: 0.15;
+  z-index: 1;
+}
+
+.cart-doodle-1 {
+  top: 50rpx;
+  left: 80rpx;
+  transform: rotate(-10deg);
+}
+
+.cart-doodle-2 {
+  top: 180rpx;
+  right: 80rpx;
+  transform: rotate(15deg);
+}
+
+.cart-doodle-3 {
+  top: 300rpx;
+  left: 120rpx;
+  transform: rotate(-5deg);
+}
+
+/* 返回按钮样式 */
+.back-button {
+margin-top: -7rpx;
+  position: relative;
+  top: 20rpx;
+  left: 20rpx;
+  z-index: 100;
+}
+
+.back-icon {
+  font-size: 40rpx;
+  color: #333333;
+} 

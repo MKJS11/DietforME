@@ -1,0 +1,178 @@
+<!--index.wxml-->
+<wxs module="progress">
+  function getProgressPercent(current, target) {
+    if (!current || !target) return 0;
+    var percent = current / target;
+    // 确保百分比在0-100%之间，并保留整数
+    return Math.floor(Math.min(Math.max(percent, 0), 1) * 100);
+  }
+  
+  module.exports = {
+    getProgressPercent: getProgressPercent
+  };
+</wxs>
+
+<view class="page-container">
+  <!-- 背景图片 -->
+  <image class="bg-image" src="../../images/kitchen-bg.png" mode="aspectFill"></image>
+
+  <!-- 烟花容器 -->
+  <view class="fireworks-container">
+    <view wx:for="{{fireworks}}" 
+          wx:key="id" 
+          class="firework"
+          style="left: {{item.left}}; top: {{item.top}}; animation-delay: {{item.delay}}ms; transform: scale({{item.scale}}); --firework-color: {{item.color}};">
+    </view>
+  </view>
+  
+  <!-- 使用统一的导航栏组件 -->
+  <navigation-bar
+    title="DietForMe"
+    background="var(--card-background)"
+    color="var(--primary-color)"
+  >
+    <view slot="center">
+      <view class="app-title">
+        <text class="app-name">DietForMe</text>
+        <text class="app-version">v1.0</text>
+      </view>
+    </view>
+    <view slot="right">
+      <view class="nav-actions">
+        <view class="notification-icon">
+          <text class="icon-bell"></text>
+        </view>
+      </view>
+    </view>
+  </navigation-bar>
+
+  <scroll-view 
+    class="scrollarea" 
+    scroll-y="true"
+    enable-flex="true"
+    refresher-enabled="{{true}}"
+    refresher-threshold="50"
+    refresher-default-style="black"
+    refresher-background="#f5f7f6"
+    refresher-triggered="{{isRefreshing}}"
+    bindrefresherrefresh="onRefresh"
+    enhanced="true" 
+    show-scrollbar="true" 
+    bounces="true"
+    fast-deceleration="{{true}}"
+    scroll-anchoring="true"
+    scroll-with-animation="true">
+    <view class="container">
+      
+
+      <!-- 用户信息卡片 -->
+      <view class="user-card glass-effect" bindtap="goToSettings">
+        <view class="user-avatar">
+          <text class="icon-person"></text>
+        </view>
+        <view class="user-details">
+          <view class="user-greeting">您好！</view>
+          <view class="user-info-summary" wx:if="{{hasUserInfo}}">
+            <text>{{userInfo.age}}岁 · {{userInfo.height}}cm · {{userInfo.weight}}kg</text>
+          </view>
+          <view class="user-info-summary" wx:else>
+            <text>点击完善您的个人信息</text>
+          </view>
+        </view>
+        <view class="edit-profile-btn">
+          <text class="icon-edit"></text>
+        </view>
+      </view>
+
+      <!-- 健康数据概览 -->
+      <view class="health-overview glass-effect">
+        <view class="health-card" bindtap="showBmiDetails">
+          <view class="health-card-value">{{bmiValue}}</view>
+          <view class="health-card-label">BMI</view>
+          <view class="health-card-status {{bmiClass}}">{{bmiStatus}}</view>
+        </view>
+        
+        <view class="health-card" bindtap="addWaterIntake">
+          <view class="health-card-icon">
+            <text class="icon-water"></text>
+          </view>
+          <view class="health-card-label">饮水量</view>
+          <view class="health-card-progress">
+            <view class="progress-bar">
+              <view class="progress-fill" style="width: {{waterIntake.current / waterIntake.target * 100}}%;"></view>
+            </view>
+            <text class="progress-text">{{waterIntake.current}}/{{waterIntake.target}}ml</text>
+          </view>
+        </view>
+        
+        <view class="health-card" bindtap="showCalorieDetails">
+          <view class="health-card-icon">
+            <text class="icon-fire"></text>
+          </view>
+          <view class="health-card-label">今日热量</view>
+          <view class="health-card-progress">
+            <view class="progress-bar">
+              <view class="progress-fill" style="width: {{calorieIntake.current / calorieIntake.target * 100}}%;"></view>
+            </view>
+            <text class="progress-text">{{calorieIntake.current}}/{{calorieIntake.target}}千卡</text>
+          </view>
+        </view>
+      </view>
+<!-- 水杯组件 -->
+      <view class="water-cup-container glass-effect">
+        <view class="water-cup" bindtap="drinkWater">
+          <view class="water-cup-inner">
+            <view class="water-wave" style="height: {{progress.getProgressPercent(waterIntake.current, waterIntake.target)}}%; transition: height 0.5s ease-out;"></view>
+            <view class="water-cup-overlay">
+              <text class="water-amount">{{waterIntake.current}}/{{waterIntake.target}}ml</text>
+            </view>
+          </view>
+          <view class="water-cup-handle"></view>
+        </view>
+        <view class="water-cup-info">
+          <view class="water-info-main">
+            <text class="water-cup-title">今日饮水量</text>
+            <text class="water-cup-percent">{{progress.getProgressPercent(waterIntake.current, waterIntake.target)}}%</text>
+            <text class="water-cup-tip">点击杯子喝水</text>
+          </view>
+          <view class="water-actions">
+            <view class="water-action-btn" bindtap="resetWaterIntake">
+              <text class="icon-refresh"></text>
+              <text class="action-text">重置</text>
+            </view>
+            <view class="water-action-btn" bindtap="refreshWaterIntake">
+              <text class="icon-refresh"></text>
+              <text class="action-text">刷新</text>
+            </view>
+          </view>
+        </view>
+      </view>
+      <!-- 功能导航 -->
+      <view class="section">
+        <view class="section-header">
+          <text class="section-title">功能导航</text>
+        </view>
+        <view class="feature-grid">
+          <view class="feature-item glass-effect" bindtap="goToRecipes">
+            <view class="feature-icon feature-icon-recipe">
+              <text class="icon-food"></text>
+            </view>
+            <text class="feature-name">今日吃什么</text>
+          </view>
+          <view class="feature-item glass-effect" bindtap="goToRecord">
+            <view class="feature-icon feature-icon-record">
+              <text class="icon-chart"></text>
+            </view>
+            <text class="feature-name">今日记录</text>
+          </view>
+        </view>
+      </view>
+    </view>
+  </scroll-view>
+
+  <!-- 底部安全区域 -->
+  <view class="safe-area-bottom"></view>
+
+  <!-- 使用自定义底部导航栏组件 -->
+  <tab-bar activeTab="{{activeTab}}"></tab-bar>
+</view>

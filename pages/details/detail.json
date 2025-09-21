@@ -1,0 +1,10 @@
+{
+  "navigationBarTitleText": "菜谱详情",
+  "navigationBarBackgroundColor": "#c2e6ff",
+  "navigationBarTextStyle": "black",
+  "backgroundColor": "#f8f8f8",
+  "backgroundTextStyle": "light",
+  "enablePullDownRefresh": false,
+  "navigationStyle": "custom",
+  "usingComponents": {}
+}

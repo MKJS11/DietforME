@@ -1,0 +1,666 @@
+/* pages/recipe/detail.wxss */
+
+/* 页面容器 */
+.container {
+  width: 100%;
+  min-height: 100vh;
+  background-color: #f9f9f9;
+  padding-bottom: 120rpx; /* 为底部操作栏留出空间 */
+  padding-top: 200rpx; /* 为顶部标题栏留出空间 */
+  position: relative; /* 添加相对定位 */
+  box-sizing: border-box; /* 确保padding不会影响总宽度 */
+}
+
+/* 加载中状态 */
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+.loading-spinner {
+  width: 48rpx;
+  height: 48rpx;
+  border: 4rpx solid #f3f3f3;
+  border-top: 4rpx solid #3498db;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.loading-text {
+  margin-top: 20rpx;
+  color: #666;
+  font-size: 28rpx;
+}
+
+/* 错误状态 */
+.error-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  padding: 0 40rpx;
+}
+
+.error-text {
+  color: #666;
+  font-size: 30rpx;
+  text-align: center;
+  margin-bottom: 20rpx;
+}
+
+.error-action {
+  color: #3498db;
+  font-size: 28rpx;
+  padding: 10rpx 20rpx;
+  border: 1rpx solid #3498db;
+  border-radius: 8rpx;
+}
+
+/* 顶部标题区域 */
+.recipe-header {
+  width: 100%;
+  position: fixed; /* 固定在顶部 */
+  top: 0; /* 顶部对齐 */
+  left: 0; /* 左侧对齐 */
+  z-index: 100; /* 提高z-index确保显示在最上层 */
+  padding: 24rpx 30rpx 20rpx;
+  background-color: white;
+  box-shadow: 0 2rpx 10rpx rgba(0,0,0,0.05);
+  height: 200rpx; /* 增加高度以容纳所有内容 */
+  box-sizing: border-box; /* 包含padding和border */
+}
+
+.back-button {
+  position: absolute;
+  top: 80rpx; /* 增加顶部距离 */
+  left: 30rpx;
+  width: 48rpx;
+  height: 48rpx;
+  background-color: rgba(255,255,255,0.9);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 11;
+  box-shadow: 0 2rpx 6rpx rgba(0,0,0,0.1);
+}
+
+.back-icon {
+  color: #333;
+  font-size: 30rpx;
+}
+
+.recipe-title-container {
+  margin-left: 70rpx;
+  padding-right: 20rpx;
+  margin-top: 60rpx; /* 增加顶部边距 */
+}
+
+.recipe-title {
+  color: #222;
+  font-size: 36rpx;
+  font-weight: 500;
+  margin-bottom: 20rpx; /* 增加与meta信息的间距 */
+}
+
+.recipe-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24rpx;
+  margin-top: 8rpx; /* 增加与标题的间距 */
+}
+
+.meta-item {
+  display: block;
+  align-items: center;
+  color: #666;
+}
+
+.meta-icon {
+  margin-right: 8rpx;
+  font-size: 24rpx;
+}
+
+.meta-text {
+  font-size: 24rpx;
+}
+
+/* 内容区域 */
+.recipe-content {
+  padding: 0 0 20rpx 0;
+  margin-top: 20rpx; /* 减小顶部边距，因为container已经有padding-top */
+  background-color: transparent;
+  width: 100%;
+  box-sizing: border-box;
+  position: relative; /* 添加相对定位 */
+  z-index: 1; /* 确保在header下层 */
+}
+
+/* 第一个section (健康益处) 额外样式 */
+.recipe-content .section:first-child {
+  margin-top: 0; /* 移除第一个section的上边距 */
+}
+
+/* 分类和标签 */
+.tags-section {
+  margin: 8rpx 24rpx; /* 进一步减少上下外边距 */
+  padding: 0;
+}
+
+.categories-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16rpx;
+  margin-bottom: 16rpx;
+}
+
+.category-item {
+  padding: 6rpx 16rpx;
+  background-color: #3498db;
+  color: #fff;
+  border-radius: 20rpx;
+  font-size: 22rpx;
+}
+
+.tags-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16rpx;
+}
+
+.tag-item {
+  padding: 6rpx 16rpx;
+  background-color: #f0f0f0;
+  color: #666;
+  border-radius: 20rpx;
+  font-size: 22rpx;
+}
+
+/* 评分区域 */
+.rating-section {
+  display: flex;
+  align-items: center;
+  margin: 8rpx 24rpx 12rpx; /* 上边距更小，下边距稍大 */
+  padding: 16rpx; /* 减少内边距 */
+  background-color: white;
+  border-radius: 12rpx;
+  box-shadow: 0 2rpx 8rpx rgba(0,0,0,0.05);
+}
+
+.rating-stars {
+  display: flex;
+  margin-right: 16rpx;
+}
+
+.star {
+  color: #ddd;
+  font-size: 28rpx;
+  margin-right: 4rpx;
+}
+
+.star.filled {
+  color: #f1c40f;
+}
+
+.rating-count {
+  color: #666;
+  font-size: 24rpx;
+}
+
+/* 内容区块 */
+.section {
+  margin: 12rpx 24rpx; /* 减少上下边距 */
+  background-color: white;
+  border-radius: 12rpx;
+  overflow: visible; /* 改为visible，允许内容溢出 */
+  box-shadow: 0 2rpx 8rpx rgba(0,0,0,0.05);
+  transition: none; /* 移除高度过渡，防止整体位置变化 */
+  width: calc(100% - 48rpx); /* 确保宽度固定 */
+  box-sizing: border-box; /* 包含padding和border */
+  position: relative; /* 相对定位 */
+  min-height: 68rpx; /* 固定最小高度，保证header高度 */
+  display: flex; /* 使用flex布局 */
+  flex-direction: column; /* 垂直排列 */
+}
+
+.section-header {
+  display: flex; /* flex布局 */
+  justify-content: space-between;
+  align-items: center;
+  padding: 20rpx 24rpx; /* 减少内边距 */
+  background-color: white;
+  border-bottom: 1rpx solid #f5f5f5;
+  width: 100%; /* 占满section宽度 */
+  box-sizing: border-box; /* 包含padding和border */
+  flex-shrink: 0; /* 不允许收缩 */
+  z-index: 2; /* 确保在内容之上 */
+}
+
+.section-title {
+  font-size: 30rpx;
+  font-weight: 500;
+  color: #222;
+}
+
+.section-actions {
+  display: flex;
+  align-items: center;
+  gap: 12rpx; /* 减少间距 */
+}
+
+.section-header .action-button {
+  flex: initial; /* 覆盖全局的flex: 1设置 */
+  height: auto; /* 覆盖全局的height: 100%设置 */
+  padding: 6rpx 12rpx; /* 减小内边距 */
+  background-color: #f8f8f8; /* 恢复背景色 */
+  border-radius: 6rpx; /* 添加圆角 */
+}
+
+.section-header .action-icon,
+.section-header .action-text {
+  font-size: 22rpx; /* 减小字体大小 */
+}
+
+.action-button {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8rpx 16rpx;
+  background-color: transparent;
+  border: none;
+  height: 100%;
+}
+
+.action-icon {
+  margin-right: 8rpx;
+  font-size: 28rpx;
+}
+
+.action-icon.favorite {
+  color: #ff4757;
+}
+
+.action-text {
+  font-size: 24rpx;
+  color: #666;
+}
+
+.toggle-icon {
+  font-size: 24rpx;
+  color: #999;
+  transition: transform 0.3s ease;
+}
+
+.toggle-icon.expanded {
+  transform: rotate(180deg);
+}
+
+/* 内容容器，使用绝对定位方式，不影响其他元素 */
+.section-content {
+  padding: 20rpx 24rpx; 
+  background-color: white;
+  transition: max-height 0.3s ease, opacity 0.3s ease; /* 只对内容高度和透明度过渡 */
+  width: 100%; /* 确保content占满section宽度 */
+  box-sizing: border-box; /* 包含padding和border */
+  overflow: hidden; /* 确保内容溢出时不会影响布局 */
+  opacity: 1;
+  max-height: 2000rpx; /* 足够大的最大高度 */
+  flex-grow: 1; /* 允许增长 */
+}
+
+/* 隐藏状态 */
+.section-content.hidden {
+  max-height: 0;
+  padding-top: 0;
+  padding-bottom: 0;
+  opacity: 0;
+  margin: 0; /* 确保没有外边距 */
+  border: none; /* 移除边框 */
+  visibility: hidden; /* 彻底隐藏 */
+  pointer-events: none; /* 不接收点击事件 */
+}
+
+/* 健康益处 */
+.benefits-text {
+  font-size: 26rpx;
+  color: #333;
+  line-height: 1.5;
+}
+
+/* 食材列表 */
+.ingredients-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16rpx;
+}
+
+.ingredient-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20rpx;
+  background-color: #f9f9f9;
+  border-radius: 8rpx;
+}
+
+.ingredient-name {
+  font-size: 26rpx;
+  color: #333;
+}
+
+.ingredient-amount {
+  font-size: 26rpx;
+  color: #666;
+}
+
+/* 营养成分 */
+.nutrition-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16rpx;
+  width: 100%; /* 确保grid占满容器宽度 */
+  box-sizing: border-box; /* 包含padding和border在内的盒模型 */
+  min-height: 0; /* 解决grid容器高度变化问题 */
+  max-width: 100%; /* 确保不会超出父容器 */
+}
+
+.nutrition-item {
+  padding: 16rpx;
+  background-color: #f9f9f9;
+  border-radius: 8rpx;
+  text-align: center;
+  width: 100%; /* 确保每个item占满网格单元格 */
+  box-sizing: border-box; /* 包含padding和border在内的盒模型 */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.nutrition-name {
+  font-size: 22rpx;
+  color: #666;
+  margin-bottom: 8rpx;
+}
+
+.nutrition-value {
+  font-size: 26rpx;
+  color: #333;
+  font-weight: 500;
+}
+
+/* 步骤列表 */
+.steps-list {
+  display: flex;
+  flex-direction: column;
+  gap: 24rpx;
+}
+
+.step-item {
+  display: flex;
+  gap: 20rpx;
+  padding: 20rpx;
+  background-color: #f9f9f9;
+  border-radius: 8rpx;
+}
+
+.step-number {
+  width: 40rpx;
+  height: 40rpx;
+  min-width: 40rpx;
+  background-color: #3498db;
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24rpx;
+}
+
+.step-content {
+  flex: 1;
+  font-size: 26rpx;
+  color: #333;
+  line-height: 1.5;
+}
+
+/* 烹饪小贴士 */
+.tips-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16rpx;
+}
+
+.tip-item {
+  display: flex;
+  align-items: flex-start;
+  padding: 16rpx;
+  background-color: #f9f9f9;
+  border-radius: 8rpx;
+}
+
+.tip-icon {
+  margin-right: 12rpx;
+  font-size: 28rpx;
+  color: #3498db;
+}
+
+.tip-text {
+  flex: 1;
+  font-size: 26rpx;
+  color: #333;
+  line-height: 1.5;
+}
+
+/* 评论区域 */
+.comments-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20rpx;
+}
+
+.comment-item {
+  padding: 20rpx;
+  background-color: #f9f9f9;
+  border-radius: 8rpx;
+}
+
+.comment-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 12rpx;
+}
+
+.comment-avatar {
+  width: 48rpx;
+  height: 48rpx;
+  border-radius: 50%;
+  margin-right: 12rpx;
+  background-color: #ddd;
+}
+
+.comment-info {
+  flex: 1;
+}
+
+.comment-username {
+  font-size: 24rpx;
+  color: #333;
+  font-weight: 500;
+}
+
+.comment-time {
+  font-size: 20rpx;
+  color: #999;
+  margin-top: 4rpx;
+}
+
+.comment-rating {
+  display: flex;
+}
+
+.comment-content {
+  font-size: 26rpx;
+  color: #333;
+  line-height: 1.5;
+}
+
+/* 底部操作栏 */
+.action-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 100rpx;
+  background-color: white;
+  box-shadow: 0 -2rpx 10rpx rgba(0,0,0,0.1);
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding: 0 20rpx;
+  z-index: 100;
+  width: 100%; /* 确保底部操作栏占满屏幕宽度 */
+  box-sizing: border-box; /* 包含padding和border在内的盒模型 */
+}
+
+.action-button {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8rpx 16rpx;
+  background-color: transparent;
+  border: none;
+  height: 100%;
+}
+
+.action-icon {
+  margin-right: 8rpx;
+  font-size: 28rpx;
+}
+
+.action-icon.favorite {
+  color: #ff4757;
+}
+
+.action-text {
+  font-size: 24rpx;
+  color: #666;
+}
+
+.share-button {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  background-color: transparent;
+  border: none;
+  height: 80%;
+  line-height: normal;
+  margin: 0;
+  font-size: 24rpx;
+  color: #666;
+}
+
+.share-button::after {
+  border: none;
+}
+
+/* 评分模态框 */
+.rating-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0,0,0,0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.rating-modal-content {
+  width: 80%;
+  background-color: white;
+  border-radius: 16rpx;
+  padding: 30rpx;
+  box-shadow: 0 4rpx 20rpx rgba(0,0,0,0.15);
+}
+
+.rating-modal-title {
+  font-size: 32rpx;
+  font-weight: 500;
+  color: #222;
+  text-align: center;
+  margin-bottom: 24rpx;
+}
+
+.rating-stars-container {
+  display: flex;
+  justify-content: center;
+  gap: 24rpx;
+  margin-bottom: 30rpx;
+}
+
+.rating-star {
+  font-size: 48rpx;
+  color: #ddd;
+}
+
+.rating-star.active {
+  color: #f1c40f;
+}
+
+.comment-input {
+  width: 100%;
+  height: 180rpx;
+  padding: 20rpx;
+  background-color: #f9f9f9;
+  border-radius: 12rpx;
+  font-size: 28rpx;
+  margin-bottom: 30rpx;
+}
+
+.modal-buttons {
+  display: flex;
+  gap: 20rpx;
+}
+
+.modal-button {
+  flex: 1;
+  height: 80rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8rpx;
+  font-size: 28rpx;
+}
+
+.cancel-button {
+  background-color: #f0f0f0;
+  color: #666;
+}
+
+.submit-button {
+  background-color: #3498db;
+  color: white;
+}
+
+/* 无数据提示 */
+.no-data {
+  color: #999;
+  font-size: 26rpx;
+  text-align: center;
+  padding: 40rpx 0;
+} 

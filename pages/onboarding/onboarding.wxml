@@ -1,0 +1,154 @@
+<!--pages/onboarding/onboarding.wxml-->
+<view class="ios-container">
+  <view class="ios-status-bar"></view>
+  
+  <view class="ios-header">
+    <view class="ios-title">DietForMe</view>
+    <view class="ios-subtitle">个性化健康饮食助手</view>
+  </view>
+
+  <view class="ios-progress">
+    <view class="ios-progress-dots">
+      <view wx:for="{{[0, 1, 2, 3]}}" wx:key="*this" class="ios-progress-dot {{currentStep >= item ? 'active' : ''}}"></view>
+    </view>
+    <view class="ios-progress-text">{{currentStep + 1}}/{{totalSteps}}</view>
+  </view>
+
+  <view class="ios-content">
+    <!-- 步骤1：基本信息 -->
+    <view class="ios-step" hidden="{{currentStep !== 0}}">
+      <view class="ios-step-header">
+        <view class="ios-step-title">基本信息</view>
+        <view class="ios-step-desc">请提供您的基本信息，以便我们为您定制健康饮食方案</view>
+      </view>
+      
+      <view class="ios-form">
+        <view class="ios-form-item">
+          <text class="ios-label">年龄</text>
+          <input class="ios-input" type="number" placeholder="请输入您的年龄" value="{{userInfo.age}}" bindinput="handleInputChange" data-field="age" />
+        </view>
+        
+        <view class="ios-form-item">
+          <text class="ios-label">性别</text>
+          <view class="ios-segmented-control">
+            <radio-group bindchange="handleRadioChange" data-field="gender">
+              <view class="ios-segmented-items">
+                <view wx:for="{{genderOptions}}" wx:key="value" 
+                      class="ios-segmented-item {{userInfo.gender === item.value ? 'active' : ''}}"
+                      bindtap="handleSegmentTap" 
+                      data-field="gender" 
+                      data-value="{{item.value}}" 
+                      hover-class="ios-segmented-item-hover">
+                  <radio value="{{item.value}}" checked="{{userInfo.gender === item.value}}" hidden="true"/>
+                  <view class="ios-segmented-text">{{item.name}}</view>
+                </view>
+              </view>
+            </radio-group>
+          </view>
+        </view>
+        
+        <view class="ios-form-item">
+          <text class="ios-label">身高 (cm)</text>
+          <input class="ios-input" type="digit" placeholder="请输入您的身高" value="{{userInfo.height}}" bindinput="handleInputChange" data-field="height" />
+        </view>
+        
+        <view class="ios-form-item">
+          <text class="ios-label">体重 (kg)</text>
+          <input class="ios-input" type="digit" placeholder="请输入您的体重" value="{{userInfo.weight}}" bindinput="handleInputChange" data-field="weight" />
+        </view>
+      </view>
+    </view>
+
+    <!-- 步骤2：疾病情况 -->
+    <view class="ios-step" hidden="{{currentStep !== 1}}">
+      <view class="ios-step-header">
+        <view class="ios-step-title">健康状况</view>
+        <view class="ios-step-desc">了解您的健康状况有助于我们提供更精准的饮食建议</view>
+      </view>
+      
+      <view class="ios-form">
+        <view class="ios-form-item">
+          <text class="ios-label">您是否患有以下疾病？（可多选）</text>
+          <checkbox-group bindchange="handleCheckboxChange" data-field="diseases">
+            <view class="ios-checkbox-list">
+              <view wx:for="{{diseaseOptions}}" wx:key="value" class="ios-checkbox-item">
+                <view class="ios-checkbox {{item.checked ? 'checked' : ''}}" bindtap="toggleCheckbox" data-field="diseases" data-index="{{index}}">
+                  <view class="ios-checkbox-inner"></view>
+                </view>
+                <checkbox value="{{item.value}}" checked="{{item.checked}}" hidden="true"/>
+                <text class="ios-checkbox-label">{{item.name}}</text>
+              </view>
+            </view>
+          </checkbox-group>
+        </view>
+      </view>
+    </view>
+
+    <!-- 步骤3：健康状态 -->
+    <view class="ios-step" hidden="{{currentStep !== 2}}">
+      <view class="ios-step-header">
+        <view class="ios-step-title">生活习惯</view>
+        <view class="ios-step-desc">您的生活习惯将影响我们为您推荐的饮食方案</view>
+      </view>
+      
+      <view class="ios-form">
+        <view class="ios-form-item">
+          <text class="ios-label">您的健康状态是？（可多选）</text>
+          <checkbox-group bindchange="handleCheckboxChange" data-field="healthStatus">
+            <view class="ios-checkbox-list">
+              <view wx:for="{{healthStatusOptions}}" wx:key="value" class="ios-checkbox-item">
+                <view class="ios-checkbox {{item.checked ? 'checked' : ''}}" bindtap="toggleCheckbox" data-field="healthStatus" data-index="{{index}}">
+                  <view class="ios-checkbox-inner"></view>
+                </view>
+                <checkbox value="{{item.value}}" checked="{{item.checked}}" hidden="true"/>
+                <text class="ios-checkbox-label">{{item.name}}</text>
+              </view>
+            </view>
+          </checkbox-group>
+        </view>
+      </view>
+    </view>
+
+    <!-- 步骤4：饮食偏好 -->
+    <view class="ios-step" hidden="{{currentStep !== 3}}">
+      <view class="ios-step-header">
+        <view class="ios-step-title">饮食偏好</view>
+        <view class="ios-step-desc">告诉我们您的饮食偏好，让我们为您推荐更符合口味的健康食谱</view>
+      </view>
+      
+      <view class="ios-form">
+        <view class="ios-form-item">
+          <text class="ios-label">您的饮食偏好是？（可多选）</text>
+          <checkbox-group bindchange="handleCheckboxChange" data-field="dietPreferences">
+            <view class="ios-checkbox-list">
+              <view wx:for="{{dietPreferenceOptions}}" wx:key="value" class="ios-checkbox-item">
+                <view class="ios-checkbox {{item.checked ? 'checked' : ''}}" bindtap="toggleCheckbox" data-field="dietPreferences" data-index="{{index}}">
+                  <view class="ios-checkbox-inner"></view>
+                </view>
+                <checkbox value="{{item.value}}" checked="{{item.checked}}" hidden="true"/>
+                <text class="ios-checkbox-label">{{item.name}}</text>
+              </view>
+            </view>
+          </checkbox-group>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view class="ios-footer">
+
+    <view class="ios-buttons">
+      <button class="ios-button secondary {{buttonPressedSecondary ? 'ios-button-pressed' : ''}}" 
+              bindtap="prevStep" 
+              bindtouchstart="handleButtonTouchStart" 
+              bindtouchend="handleButtonTouchEnd"
+              data-button="secondary"
+              wx:if="{{currentStep > 0}}">上一步</button>
+      <button class="ios-button primary {{buttonPressedPrimary ? 'ios-button-pressed' : ''}}" 
+              bindtap="nextStep" 
+              bindtouchstart="handleButtonTouchStart" 
+              bindtouchend="handleButtonTouchEnd"
+              data-button="primary">{{currentStep === totalSteps - 1 ? '开始使用' : '下一步'}}</button>
+    </view>
+  </view>
+</view> 
